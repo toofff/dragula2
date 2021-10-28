@@ -1,6 +1,5 @@
 const emitter = require('contra/emitter');
 const crossvent = require('crossvent');
-const classes = require('./classes');
 
 const doc = document;
 const { documentElement } = doc;
@@ -150,7 +149,10 @@ function dragula(initialContainers, options) {
     _offsetX = getCoord('pageX', e) - offset.left;
     _offsetY = getCoord('pageY', e) - offset.top;
 
-    classes.add(_copy || _item, 'gu-transit');
+    const inTransit = _copy || _item;
+    if (inTransit) {
+      inTransit.classList.add('gu-transit');
+    }
     renderMirrorImage();
     drag(e);
   }
@@ -310,7 +312,7 @@ function dragula(initialContainers, options) {
     ungrab();
     removeMirrorImage();
     if (item) {
-      classes.rm(item, 'gu-transit');
+      item.classList.remove('gu-transit');
     }
     if (_renderTimer) {
       clearTimeout(_renderTimer);
@@ -416,11 +418,15 @@ function dragula(initialContainers, options) {
   }
 
   function spillOver(el) {
-    classes.rm(el, 'gu-hide');
+    if (el) {
+      el.classList.remove('gu-hide');
+    }
   }
 
   function spillOut(el) {
-    if (drake.dragging) { classes.add(el, 'gu-hide'); }
+    if (el && drake.dragging) {
+      el.classList.add('gu-hide');
+    }
   }
 
   function renderMirrorImage() {
@@ -431,17 +437,17 @@ function dragula(initialContainers, options) {
     _mirror = _item.cloneNode(true);
     _mirror.style.width = `${getRectWidth(rect)}px`;
     _mirror.style.height = `${getRectHeight(rect)}px`;
-    classes.rm(_mirror, 'gu-transit');
-    classes.add(_mirror, 'gu-mirror');
+    _mirror.classList.remove('gu-transit');
+    _mirror.classList.add('gu-mirror');
     o.mirrorContainer.appendChild(_mirror);
     touchy(documentElement, 'add', 'mousemove', drag);
-    classes.add(o.mirrorContainer, 'gu-unselectable');
+    o.mirrorContainer.classList.add('gu-unselectable');
     drake.emit('cloned', _mirror, _item, 'mirror');
   }
 
   function removeMirrorImage() {
     if (_mirror) {
-      classes.rm(o.mirrorContainer, 'gu-unselectable');
+      o.mirrorContainer.classList.remove('gu-unselectable');
       touchy(documentElement, 'remove', 'mousemove', drag);
       getParent(_mirror).removeChild(_mirror);
       _mirror = null;
