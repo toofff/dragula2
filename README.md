@@ -6,6 +6,11 @@
 
 Browser support includes every sane browser and **IE7+**. <sub>_(Granted you polyfill the functional `Array` methods in ES5)_</sub>
 
+Current target browser support:
+* Chrome 55+, Edge 12+, Opera 42+
+* Firefox 59+
+* Safari 13+, iOS Safari 13+
+
 Framework support includes vanilla JavaScript, Angular, and React.
 
 - Official [AngularJs bridge][link_angularjs_bridge] for `dragula` [_(demo)_][demo_link_angularjs_bridge]
@@ -20,7 +25,7 @@ Try out the [demo][link_repository_dragula]!
 
 # Inspiration
 
-Have you ever wanted a drag and drop library that just works? That doesn't just depend on bloated frameworks, that has great support? That actually understands where to place the elements when they are dropped? That doesn't need you to do a zillion things to get it to work? Well, so did I!
+Have you ever wanted a drag and drop library that just works? That doesn't just depend on bloated frameworks? That actually understands where to place the elements when they are dropped? That doesn't need you to do a zillion things to get it to work? Well, so did I!
 
 # Features
 
