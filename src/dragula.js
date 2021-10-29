@@ -181,7 +181,7 @@ function dragula(initialContainers, options) {
       return;
     }
 
-    const movable = o.moves(item, source, handle, nextEl(item));
+    const movable = o.moves(item, source, handle, item.nextElementSibling);
     if (!movable) {
       return;
     }
@@ -211,7 +211,7 @@ function dragula(initialContainers, options) {
 
     _source = context.source;
     _item = context.item;
-    _initialSibling = _currentSibling = nextEl(context.item);
+    _initialSibling = _currentSibling = context.item.nextElementSibling;
 
     drake.dragging = true;
     drake.emit('drag', _item, _source);
@@ -331,7 +331,7 @@ function dragula(initialContainers, options) {
     } else if (_mirror) {
       sibling = _currentSibling;
     } else {
-      sibling = nextEl(_copy || _item);
+      sibling = (_copy || _item).nextElementSibling;
     }
     return target === _source && sibling === _initialSibling;
   }
@@ -405,7 +405,7 @@ function dragula(initialContainers, options) {
     if (
       (reference === null && changed)
       || reference !== item
-      && reference !== nextEl(item)
+      && reference !== item.nextElementSibling
     ) {
       _currentSibling = reference;
       dropTarget.insertBefore(item, reference);
@@ -492,7 +492,7 @@ function dragula(initialContainers, options) {
     }
 
     function resolve(after) {
-      return after ? nextEl(target) : target;
+      return after ? target.nextElementSibling : target;
     }
   }
 
@@ -550,18 +550,6 @@ function isEditable(el) {
   if (el.contentEditable === 'false') { return false; } // stop the lookup
   if (el.contentEditable === 'true') { return true; } // found a contentEditable element in the chain
   return isEditable(getParent(el)); // contentEditable is set to 'inherit'
-}
-
-function nextEl(el) {
-  function manually() {
-    let sibling = el;
-    do {
-      sibling = sibling.nextSibling;
-    } while (sibling && sibling.nodeType !== 1);
-    return sibling;
-  }
-
-  return el.nextElementSibling || manually();
 }
 
 function getEventHost(e) {

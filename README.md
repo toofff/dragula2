@@ -6,7 +6,7 @@
 
 Browser support includes every sane browser and **IE7+**. <sub>_(Granted you polyfill the functional `Array` methods in ES5)_</sub>
 
-Current target browser support:
+Indicative target browser support:
 * Chrome 55+, Edge 12+, Opera 42+
 * Firefox 59+
 * Safari 13+, iOS Safari 13+
