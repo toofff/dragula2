@@ -1,5 +1,4 @@
 const emitter = require('contra/emitter');
-const crossvent = require('crossvent');
 
 const doc = document;
 const { documentElement } = doc;
@@ -22,7 +21,7 @@ function dragula(initialContainers, options) {
   let _copy; // item used for copying
   let _renderTimer; // timer for setTimeout renderMirrorImage
   let _lastDropTarget = null; // last container item was over
-  let _grabbed; // holds mousedown context until first mousemove
+  let _grabbed; // holds pointerdown context until first pointermove
 
   const o = options || {};
   if (o.moves === undefined) { o.moves = always; }
@@ -63,19 +62,19 @@ function dragula(initialContainers, options) {
 
   function events(isRemove) {
     const op = isRemove ? 'remove' : 'add';
-    touchy(documentElement, op, 'mousedown', grab);
-    touchy(documentElement, op, 'mouseup', release);
+    documentElement[`${op}EventListener`]('pointerdown', grab);
+    documentElement[`${op}EventListener`]('pointerup', release);
   }
 
   function eventualMovements(isRemove) {
     const op = isRemove ? 'remove' : 'add';
-    touchy(documentElement, op, 'mousemove', startBecauseMouseMoved);
+    documentElement[`${op}EventListener`]('pointermove', startBecauseMouseMoved);
   }
 
   function movements(isRemove) {
     const op = isRemove ? 'remove' : 'add';
-    crossvent[op](documentElement, 'selectstart', preventGrabbed); // IE8
-    crossvent[op](documentElement, 'click', preventGrabbed);
+    documentElement[`${op}EventListener`]('selectstart', preventGrabbed); // IE8
+    documentElement[`${op}EventListener`]('click', preventGrabbed);
   }
 
   function destroy() {
@@ -104,7 +103,7 @@ function dragula(initialContainers, options) {
     }
     _grabbed = context;
     eventualMovements();
-    if (e.type === 'mousedown') {
+    if (e.type === 'pointerdown') {
       if (isInput(item)) { // see also: https://github.com/bevacqua/dragula/issues/208
         item.focus(); // fixes https://github.com/bevacqua/dragula/issues/176
       } else {
@@ -119,7 +118,7 @@ function dragula(initialContainers, options) {
     }
     if (whichMouseButton(e) === 0) {
       release({});
-      // when text is selected on an input and then dragged, mouseup doesn't fire.
+      // when text is selected on an input and then dragged, pointerup doesn't fire.
       // this is our only hope
       return;
     }
@@ -440,7 +439,7 @@ function dragula(initialContainers, options) {
     _mirror.classList.remove('gu-transit');
     _mirror.classList.add('gu-mirror');
     o.mirrorContainer.appendChild(_mirror);
-    touchy(documentElement, 'add', 'mousemove', drag);
+    documentElement.addEventListener('pointermove', drag);
     o.mirrorContainer.classList.add('gu-unselectable');
     drake.emit('cloned', _mirror, _item, 'mirror');
   }
@@ -448,7 +447,7 @@ function dragula(initialContainers, options) {
   function removeMirrorImage() {
     if (_mirror) {
       o.mirrorContainer.classList.remove('gu-unselectable');
-      touchy(documentElement, 'remove', 'mousemove', drag);
+      documentElement.removeEventListener('pointermove', drag);
       getParent(_mirror).removeChild(_mirror);
       _mirror = null;
     }
@@ -499,32 +498,6 @@ function dragula(initialContainers, options) {
 
   function isCopy(item, container) {
     return typeof o.copy === 'boolean' ? o.copy : o.copy(item, container);
-  }
-}
-
-function touchy(el, op, type, fn) {
-  const touch = {
-    mouseup: 'touchend',
-    mousedown: 'touchstart',
-    mousemove: 'touchmove',
-  };
-  const pointers = {
-    mouseup: 'pointerup',
-    mousedown: 'pointerdown',
-    mousemove: 'pointermove',
-  };
-  const microsoft = {
-    mouseup: 'MSPointerUp',
-    mousedown: 'MSPointerDown',
-    mousemove: 'MSPointerMove',
-  };
-  if (global.navigator.pointerEnabled) {
-    crossvent[op](el, pointers[type], fn);
-  } else if (global.navigator.msPointerEnabled) {
-    crossvent[op](el, microsoft[type], fn);
-  } else {
-    crossvent[op](el, touch[type], fn);
-    crossvent[op](el, type, fn);
   }
 }
 

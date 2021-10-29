@@ -47,8 +47,8 @@ test('.end() emits "cancel" when not moved', function (t) {
   document.body.appendChild(div);
   drake.on('dragend', dragend);
   drake.on('cancel', cancel);
-  events.raise(item, 'mousedown', { which: 1 });
-  events.raise(item, 'mousemove', { which: 1 });
+  events.raise(item, 'pointerdown', { which: 1 });
+  events.raise(item, 'pointermove', { which: 1 });
   drake.end();
   t.plan(3);
   t.end();
@@ -71,8 +71,8 @@ test('.end() emits "drop" when moved', function (t) {
   document.body.appendChild(div2);
   drake.on('dragend', dragend);
   drake.on('drop', drop);
-  events.raise(item, 'mousedown', { which: 1 });
-  events.raise(item, 'mousemove', { which: 1 });
+  events.raise(item, 'pointerdown', { which: 1 });
+  events.raise(item, 'pointermove', { which: 1 });
   div2.appendChild(item);
   drake.end();
   t.plan(4);
@@ -95,8 +95,8 @@ test('.remove() emits "remove" for items', function (t) {
   document.body.appendChild(div);
   drake.on('dragend', dragend);
   drake.on('remove', remove);
-  events.raise(item, 'mousedown', { which: 1 });
-  events.raise(item, 'mousemove', { which: 1 });
+  events.raise(item, 'pointerdown', { which: 1 });
+  events.raise(item, 'pointermove', { which: 1 });
   drake.remove();
   t.plan(3);
   t.end();
@@ -117,8 +117,8 @@ test('.remove() emits "cancel" for copies', function (t) {
   document.body.appendChild(div);
   drake.on('dragend', dragend);
   drake.on('cancel', cancel);
-  events.raise(item, 'mousedown', { which: 1 });
-  events.raise(item, 'mousemove', { which: 1 });
+  events.raise(item, 'pointerdown', { which: 1 });
+  events.raise(item, 'pointermove', { which: 1 });
   drake.remove();
   t.plan(4);
   t.end();
@@ -140,8 +140,8 @@ test('.cancel() emits "cancel" when not moved', function (t) {
   document.body.appendChild(div);
   drake.on('dragend', dragend);
   drake.on('cancel', cancel);
-  events.raise(item, 'mousedown', { which: 1 });
-  events.raise(item, 'mousemove', { which: 1 });
+  events.raise(item, 'pointerdown', { which: 1 });
+  events.raise(item, 'pointermove', { which: 1 });
   drake.cancel();
   t.plan(3);
   t.end();
@@ -164,8 +164,8 @@ test('.cancel() emits "drop" when not reverted', function (t) {
   document.body.appendChild(div2);
   drake.on('dragend', dragend);
   drake.on('drop', drop);
-  events.raise(item, 'mousedown', { which: 1 });
-  events.raise(item, 'mousemove', { which: 1 });
+  events.raise(item, 'pointerdown', { which: 1 });
+  events.raise(item, 'pointermove', { which: 1 });
   div2.appendChild(item);
   drake.cancel();
   t.plan(4);
@@ -190,8 +190,8 @@ test('.cancel() emits "cancel" when reverts', function (t) {
   document.body.appendChild(div2);
   drake.on('dragend', dragend);
   drake.on('cancel', cancel);
-  events.raise(item, 'mousedown', { which: 1 });
-  events.raise(item, 'mousemove', { which: 1 });
+  events.raise(item, 'pointerdown', { which: 1 });
+  events.raise(item, 'pointermove', { which: 1 });
   div2.appendChild(item);
   drake.cancel();
   t.plan(3);
@@ -205,15 +205,15 @@ test('.cancel() emits "cancel" when reverts', function (t) {
   }
 });
 
-test('mousedown emits "cloned" for mirrors', function (t) {
+test('pointerdown emits "cloned" for mirrors', function (t) {
   var div = document.createElement('div');
   var item = document.createElement('div');
   var drake = dragula([div]);
   div.appendChild(item);
   document.body.appendChild(div);
   drake.on('cloned', cloned);
-  events.raise(item, 'mousedown', { which: 1 });
-  events.raise(item, 'mousemove', { which: 1 });
+  events.raise(item, 'pointerdown', { which: 1 });
+  events.raise(item, 'pointermove', { which: 1 });
   t.plan(3);
   t.end();
   function cloned (copy, original, type) {
@@ -225,15 +225,15 @@ test('mousedown emits "cloned" for mirrors', function (t) {
   }
 });
 
-test('mousedown emits "cloned" for copies', function (t) {
+test('pointerdown emits "cloned" for copies', function (t) {
   var div = document.createElement('div');
   var item = document.createElement('div');
   var drake = dragula([div], { copy: true });
   div.appendChild(item);
   document.body.appendChild(div);
   drake.on('cloned', cloned);
-  events.raise(item, 'mousedown', { which: 1 });
-  events.raise(item, 'mousemove', { which: 1 });
+  events.raise(item, 'pointerdown', { which: 1 });
+  events.raise(item, 'pointermove', { which: 1 });
   t.plan(3);
   t.end();
   function cloned (copy, original, type) {
@@ -245,15 +245,15 @@ test('mousedown emits "cloned" for copies', function (t) {
   }
 });
 
-test('mousedown emits "drag" for items', function (t) {
+test('pointerdown emits "drag" for items', function (t) {
   var div = document.createElement('div');
   var item = document.createElement('div');
   var drake = dragula([div]);
   div.appendChild(item);
   document.body.appendChild(div);
   drake.on('drag', drag);
-  events.raise(item, 'mousedown', { which: 1 });
-  events.raise(item, 'mousemove', { which: 1 });
+  events.raise(item, 'pointerdown', { which: 1 });
+  events.raise(item, 'pointermove', { which: 1 });
   t.plan(2);
   t.end();
   function drag (original, container) {

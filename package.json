@@ -30,8 +30,7 @@
     "watch:example": "watchify --debug --verbose --outfile example/example.min.js example/example.js"
   },
   "dependencies": {
-    "contra": "1.9.4",
-    "crossvent": "1.5.5"
+    "contra": "1.9.4"
   },
   "devDependencies": {
     "browserify": "^17.0.0",
