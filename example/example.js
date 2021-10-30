@@ -1,6 +1,5 @@
 'use strict';
 
-var crossvent = require('crossvent');
 var sortable = $('sortable');
 
 dragula([$('left-defaults'), $('right-defaults')]);
@@ -37,7 +36,7 @@ dragula([$('left-copy-1tomany'), $('right-copy-1tomany')], {
 
 dragula([sortable]);
 
-crossvent.add(sortable, 'click', clickHandler);
+sortable.addEventListener('click', clickHandler);
 
 function clickHandler (e) {
   var target = e.target;
