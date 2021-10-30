@@ -17,6 +17,13 @@ Framework support includes vanilla JavaScript, Angular, and React.
 - Official [Angular bridge][link_angular_bridge] for `dragula` [_(demo)_][demo_link_angular_bridge]
 - Official [React bridge][link_react_bridge] for `dragula` [_(demo)_][demo_link_react_bridge]
 
+# Breaking changes compared to the original Dragula
+
+## Emitter -> EventTarget
+
+Instead of Emitter, Dragula2 extends [`EventTarget`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget) and thus, works with regular `addEventListener` and `removeEventListener` and anything that wraps them. Instead of positional arguments, named event parameters are passed on the event object via an object literal on `evt.detail`.
+To smoothe the transition, `on()`, `off()` and `emit()` methods are also implemented that wrap `addEventListner()` and offer a nearly identical API, so that existing code doesn't break.
+
 # Demo
 
 [![Dragula Demo][picture_dragula]][link_repository_dragula]

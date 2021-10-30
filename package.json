@@ -1,10 +1,7 @@
 {
   "name": "dragula",
   "version": "3.7.3",
-  "author": "Nicolas Bevacqua <nicolasbevacqua@gmail.com> (http://bevacqua.io/)",
-  "bugs": {
-    "url": "https://github.com/bevacqua/dragula/issues"
-  },
+  "author": "Nicolas Bevacqua <nicolasbevacqua@gmail.com>",
   "description": "Drag and drop so simple it hurts",
   "homepage": "https://github.com/bevacqua/dragula",
   "license": "MIT",
@@ -28,9 +25,6 @@
     "test-watch": "hihat test/*.js -p tap-dev-tool",
     "watch:dragula": "watchify -dvs dragula --outfile dist/dragula.js src/dragula.js",
     "watch:example": "watchify --debug --verbose --outfile example/example.min.js example/example.js"
-  },
-  "dependencies": {
-    "contra": "1.9.4"
   },
   "devDependencies": {
     "browserify": "^17.0.0",
