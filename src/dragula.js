@@ -1,7 +1,6 @@
 const emitter = require('contra/emitter');
 
-const doc = document;
-const { documentElement } = doc;
+const { documentElement } = document;
 
 function dragula(initialContainers, options) {
   const len = arguments.length;
@@ -35,7 +34,7 @@ function dragula(initialContainers, options) {
   if (o.removeOnSpill === undefined) { o.removeOnSpill = false; }
   if (o.direction === undefined) { o.direction = 'vertical'; }
   if (o.ignoreInputTextSelection === undefined) { o.ignoreInputTextSelection = true; }
-  if (o.mirrorContainer === undefined) { o.mirrorContainer = doc.body; }
+  if (o.mirrorContainer === undefined) { o.mirrorContainer = document.body; }
 
   const drake = emitter({
     containers: o.containers,
@@ -132,7 +131,7 @@ function dragula(initialContainers, options) {
     if (o.ignoreInputTextSelection) {
       const clientX = e.clientX || 0;
       const clientY = e.clientY || 0;
-      const elementBehindCursor = doc.elementFromPoint(clientX, clientY);
+      const elementBehindCursor = document.elementFromPoint(clientX, clientY);
 
       if (isInput(elementBehindCursor)) {
         return;
@@ -524,7 +523,7 @@ function getElementBehindPoint(point, x, y) {
   point = point || {};
   const state = point.className || '';
   point.className += ' gu-hide';
-  const el = doc.elementFromPoint(x, y);
+  const el = document.elementFromPoint(x, y);
   point.className = state;
 
   return el;
@@ -534,7 +533,7 @@ function never() { return false; }
 function always() { return true; }
 function getRectWidth(rect) { return rect.width || (rect.right - rect.left); }
 function getRectHeight(rect) { return rect.height || (rect.bottom - rect.top); }
-function getParent(el) { return el.parentNode === doc ? null : el.parentNode; }
+function getParent(el) { return el.parentNode === document ? null : el.parentNode; }
 function isInput(el) { return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT' || isEditable(el); }
 function isEditable(el) {
   if (!el) { return false; } // no parents were editable
