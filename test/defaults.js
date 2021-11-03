@@ -9,7 +9,7 @@ test('drake has sensible default options', function (t) {
   t.equal(typeof options.accepts, 'function', 'options.accepts defaults to a method');
   t.equal(typeof options.invalid, 'function', 'options.invalid defaults to a method');
   t.equal(typeof options.isContainer, 'function', 'options.isContainer defaults to a method');
-  t.equal(options.copy, false, 'options.copy defaults to false');
+  t.equal(options.copy(), false, 'options.copy defaults to false');
   t.equal(options.revertOnSpill, false, 'options.revertOnSpill defaults to false');
   t.equal(options.removeOnSpill, false, 'options.removeOnSpill defaults to false');
   t.equal(options.direction, 'vertical', 'options.direction defaults to \'vertical\'');
