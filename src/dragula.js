@@ -6,8 +6,7 @@ class Dragula extends EventTarget {
 
     const len = arguments.length;
     if (len === 1 && Array.isArray(initialContainers) === false) {
-      options = initialContainers;
-      initialContainers = [];
+      [options, initialContainers] = [initialContainers, []];
     }
 
     const o = this.options = { ...Dragula.defaultOptions, ...options };
@@ -563,10 +562,10 @@ class Dragula extends EventTarget {
   }
 
   static defaultOptions = {
-    moves: always,
-    accepts: always,
-    invalid: invalidTarget,
-    isContainer: never,
+    moves: () => true,
+    accepts: () => true,
+    invalid: () => false,
+    isContainer: () => false,
     copy: false,
     copySortSource: false,
     revertOnSpill: false,
@@ -585,6 +584,7 @@ function whichMouseButton(e) {
   if (e.touches !== undefined) { return e.touches.length; }
   if (e.which !== undefined && e.which !== 0) { return e.which; } // see https://github.com/bevacqua/dragula/issues/261
   if (e.buttons !== undefined) { return e.buttons; }
+
   const { button } = e;
   if (button !== undefined) { // see https://github.com/jquery/jquery/blob/99e8ff1baa7ae341e94bb89c3e84570c7c3ad9ea/src/event.js#L573-L575
     return button & 1 ? 1 : button & 2 ? 3 : (button & 4 ? 2 : 0);
@@ -609,16 +609,20 @@ function getElementBehindPoint(point, x, y) {
   return el;
 }
 
-function never() { return false; }
-function always() { return true; }
-function invalidTarget() { return false; }
-function getParent(el) { return el.parentNode === document ? null : el.parentNode; }
-function isInput(el) { return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT' || isEditable(el); }
+function getParent(el) {
+  return el.parentNode === document ? null : el.parentNode;
+}
+
 function isEditable(el) {
   if (!el) { return false; } // no parents were editable
   if (el.contentEditable === 'false') { return false; } // stop the lookup
   if (el.contentEditable === 'true') { return true; } // found a contentEditable element in the chain
+
   return isEditable(getParent(el)); // contentEditable is set to 'inherit'
+}
+
+function isInput(el) {
+  return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT' || isEditable(el);
 }
 
 module.exports = dragula;
