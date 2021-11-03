@@ -10,8 +10,7 @@ class Dragula extends EventTarget {
     }
 
     const o = this.options = { ...Dragula.defaultOptions, ...options };
-    o.containers = o.containers || initialContainers || [];
-    this.containers = o.containers;
+    this.containers = o.containers = o.containers || initialContainers || [];
     this.dragging = false;
 
     let _mirror; // mirror image
@@ -29,7 +28,7 @@ class Dragula extends EventTarget {
     let _grabbed; // holds pointerdown context until first pointermove
     const drake = this;
 
-    if (o.removeOnSpill === true) {
+    if (drake.options.removeOnSpill === true) {
       drake.on('over', spillOver).on('out', spillOut);
     }
 
@@ -45,7 +44,7 @@ class Dragula extends EventTarget {
     });
 
     function isContainer(el) {
-      return drake.containers.indexOf(el) !== -1 || o.isContainer(el);
+      return drake.containers.includes(el) || drake.options.isContainer(el);
     }
 
     function events(isRemove) {
@@ -112,12 +111,12 @@ class Dragula extends EventTarget {
       }
 
       // truthy check fixes #239, equality fixes #207, fixes #501
-      if ((e.clientX !== undefined && Math.abs(e.clientX - _moveX) <= (o.slideFactorX || 0))
-        && (e.clientY !== undefined && Math.abs(e.clientY - _moveY) <= (o.slideFactorY || 0))) {
+      if ((e.clientX !== undefined && Math.abs(e.clientX - _moveX) <= (drake.options.slideFactorX || 0))
+        && (e.clientY !== undefined && Math.abs(e.clientY - _moveY) <= (drake.options.slideFactorY || 0))) {
         return;
       }
 
-      if (o.ignoreInputTextSelection) {
+      if (drake.options.ignoreInputTextSelection) {
         const clientX = e.clientX || 0;
         const clientY = e.clientY || 0;
         const elementBehindCursor = document.elementFromPoint(clientX, clientY);
@@ -154,7 +153,7 @@ class Dragula extends EventTarget {
       }
       const handle = item;
       while (getParent(item) && isContainer(getParent(item)) === false) {
-        if (o.invalid(item, handle)) {
+        if (drake.options.invalid(item, handle)) {
           return;
         }
         item = getParent(item); // drag target should be a top element
@@ -166,11 +165,11 @@ class Dragula extends EventTarget {
       if (!source) {
         return;
       }
-      if (o.invalid(item, handle)) {
+      if (drake.options.invalid(item, handle)) {
         return;
       }
 
-      const movable = o.moves(item, source, handle, item.nextElementSibling);
+      const movable = drake.options.moves(item, source, handle, item.nextElementSibling);
       if (!movable) {
         return;
       }
@@ -236,9 +235,9 @@ class Dragula extends EventTarget {
       const elementBehindCursor = getElementBehindPoint(_mirror, clientX, clientY);
       const dropTarget = findDropTarget(elementBehindCursor, clientX, clientY);
 
-      if (dropTarget && ((_copy && o.copySortSource) || (!_copy || dropTarget !== _source))) {
+      if (dropTarget && ((_copy && drake.options.copySortSource) || (!_copy || dropTarget !== _source))) {
         drop(item, dropTarget);
-      } else if (o.removeOnSpill) {
+      } else if (drake.options.removeOnSpill) {
         remove();
       } else {
         cancel();
@@ -246,7 +245,7 @@ class Dragula extends EventTarget {
     }
 
     function drop(item, target) {
-      if (_copy && o.copySortSource && target === _source) {
+      if (_copy && drake.options.copySortSource && target === _source) {
         _item.remove();
       }
       if (isInitialPlacement(target)) {
@@ -289,7 +288,7 @@ class Dragula extends EventTarget {
       if (!drake.dragging) {
         return;
       }
-      const reverts = arguments.length > 0 ? revert : o.revertOnSpill;
+      const reverts = arguments.length > 0 ? revert : drake.options.revertOnSpill;
       const item = _copy || _item;
       const parent = getParent(item);
       const initial = isInitialPlacement(parent);
@@ -370,7 +369,7 @@ class Dragula extends EventTarget {
           return true; // should always be able to drop it right back where it was
         }
 
-        return o.accepts(_item, target, _source, reference);
+        return drake.options.accepts(_item, target, _source, reference);
       }
 
       while (target && !accepted()) {
@@ -403,26 +402,31 @@ class Dragula extends EventTarget {
         _lastDropTarget = dropTarget;
         over();
       }
+
       const parent = getParent(item);
-      if (dropTarget === _source && _copy && !o.copySortSource) {
+      if (dropTarget === _source && _copy && !drake.options.copySortSource) {
         if (parent) {
           item.remove();
         }
+
         return;
       }
+
       let reference;
       const immediate = getImmediateChild(dropTarget, elementBehindCursor);
       if (immediate !== null) {
         reference = getReference(dropTarget, immediate, clientX, clientY);
-      } else if (o.revertOnSpill === true && !_copy) {
+      } else if (drake.options.revertOnSpill === true && !_copy) {
         reference = _initialSibling;
         dropTarget = _source;
       } else {
         if (_copy && parent) {
           item.remove();
         }
+
         return;
       }
+
       if (
         (reference === null && changed)
         || reference !== item
@@ -436,6 +440,7 @@ class Dragula extends EventTarget {
           source: _source,
         });
       }
+
       function moved(type) {
         drake.emit(type, {
           element: item,
@@ -463,15 +468,16 @@ class Dragula extends EventTarget {
       if (_mirror) {
         return;
       }
+
       const rect = _item.getBoundingClientRect();
       _mirror = _item.cloneNode(true);
       _mirror.style.width = `${rect.width}px`;
       _mirror.style.height = `${rect.height}px`;
       _mirror.classList.remove('gu-transit');
       _mirror.classList.add('gu-mirror');
-      o.mirrorContainer.appendChild(_mirror);
+      drake.options.mirrorContainer.appendChild(_mirror);
       documentElement.addEventListener('pointermove', drag);
-      o.mirrorContainer.classList.add('gu-unselectable');
+      drake.options.mirrorContainer.classList.add('gu-unselectable');
       drake.emit('cloned', {
         clone: _mirror,
         original: _item,
@@ -481,7 +487,7 @@ class Dragula extends EventTarget {
 
     function removeMirrorImage() {
       if (_mirror) {
-        o.mirrorContainer.classList.remove('gu-unselectable');
+        drake.options.mirrorContainer.classList.remove('gu-unselectable');
         documentElement.removeEventListener('pointermove', drag);
         _mirror.remove();
         _mirror = null;
@@ -493,16 +499,29 @@ class Dragula extends EventTarget {
       while (immediate !== dropTarget && getParent(immediate) !== dropTarget) {
         immediate = getParent(immediate);
       }
+
       if (immediate === documentElement) {
         return null;
       }
+
       return immediate;
     }
 
     function getReference(dropTarget, target, x, y) {
-      const horizontal = o.direction === 'horizontal';
-      const reference = target !== dropTarget ? inside() : outside();
-      return reference;
+      const horizontal = drake.options.direction === 'horizontal';
+
+      function resolve(after) {
+        return after ? target.nextElementSibling : target;
+      }
+
+      function inside() { // faster, but only available if dropped inside a child element
+        const rect = target.getBoundingClientRect();
+        if (horizontal) {
+          return resolve(x > rect.left + rect.width / 2);
+        }
+
+        return resolve(y > rect.top + rect.height / 2);
+      }
 
       function outside() { // slower, but able to figure out any position
         const countChildren = dropTarget.children.length;
@@ -515,25 +534,15 @@ class Dragula extends EventTarget {
           if (horizontal && (rect.left + rect.width / 2) > x) { return el; }
           if (!horizontal && (rect.top + rect.height / 2) > y) { return el; }
         }
+
         return null;
       }
 
-      function inside() { // faster, but only available if dropped inside a child element
-        const rect = target.getBoundingClientRect();
-        if (horizontal) {
-          return resolve(x > rect.left + rect.width / 2);
-        }
-
-        return resolve(y > rect.top + rect.height / 2);
-      }
-
-      function resolve(after) {
-        return after ? target.nextElementSibling : target;
-      }
+      return target !== dropTarget ? inside() : outside();
     }
 
     function isCopy(item, container) {
-      return typeof o.copy === 'boolean' ? o.copy : o.copy(item, container);
+      return typeof drake.options.copy === 'boolean' ? drake.options.copy : drake.options.copy(item, container);
     }
   } // End constructor
 
