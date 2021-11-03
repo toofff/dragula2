@@ -369,7 +369,7 @@ class Dragula extends EventTarget {
         }
 
         const immediate = getImmediateChild(target, elementBehindCursor);
-        const reference = getReference(target, immediate, clientX, clientY);
+        const reference = getReference(target, immediate, clientX, clientY, drake.options.direction);
         const initial = isInitialPlacement(target, reference);
         if (initial) {
           return true; // should always be able to drop it right back where it was
@@ -421,7 +421,7 @@ class Dragula extends EventTarget {
       let reference;
       const immediate = getImmediateChild(dropTarget, elementBehindCursor);
       if (immediate !== null) {
-        reference = getReference(dropTarget, immediate, clientX, clientY);
+        reference = getReference(dropTarget, immediate, clientX, clientY, drake.options.direction);
       } else if (drake.options.revertOnSpill === true && !_copy) {
         reference = _initialSibling;
         dropTarget = _source;
@@ -498,53 +498,6 @@ class Dragula extends EventTarget {
         _mirror.remove();
         _mirror = null;
       }
-    }
-
-    function getImmediateChild(dropTarget, target) {
-      let immediate = target;
-      while (immediate !== dropTarget && getParent(immediate) !== dropTarget) {
-        immediate = getParent(immediate);
-      }
-
-      if (immediate === documentElement) {
-        return null;
-      }
-
-      return immediate;
-    }
-
-    function getReference(dropTarget, target, x, y) {
-      const horizontal = drake.options.direction === 'horizontal';
-
-      function resolve(after) {
-        return after ? target.nextElementSibling : target;
-      }
-
-      function inside() { // faster, but only available if dropped inside a child element
-        const rect = target.getBoundingClientRect();
-        if (horizontal) {
-          return resolve(x > rect.left + rect.width / 2);
-        }
-
-        return resolve(y > rect.top + rect.height / 2);
-      }
-
-      function outside() { // slower, but able to figure out any position
-        const countChildren = dropTarget.children.length;
-        let i;
-        let el;
-        let rect;
-        for (i = 0; i < countChildren; i++) {
-          el = dropTarget.children[i];
-          rect = el.getBoundingClientRect();
-          if (horizontal && (rect.left + rect.width / 2) > x) { return el; }
-          if (!horizontal && (rect.top + rect.height / 2) > y) { return el; }
-        }
-
-        return null;
-      }
-
-      return target !== dropTarget ? inside() : outside();
     }
   } // End constructor
 
@@ -634,6 +587,53 @@ function isEditable(el) {
 
 function isInput(el) {
   return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT' || isEditable(el);
+}
+
+function getImmediateChild(dropTarget, target) {
+  let immediate = target;
+  while (immediate !== dropTarget && getParent(immediate) !== dropTarget) {
+    immediate = getParent(immediate);
+  }
+
+  if (immediate === documentElement) {
+    return null;
+  }
+
+  return immediate;
+}
+
+function getReference(dropTarget, target, x, y, direction) {
+  const horizontal = direction === 'horizontal';
+
+  function resolve(after) {
+    return after ? target.nextElementSibling : target;
+  }
+
+  function inside() { // faster, but only available if dropped inside a child element
+    const rect = target.getBoundingClientRect();
+    if (horizontal) {
+      return resolve(x > rect.left + rect.width / 2);
+    }
+
+    return resolve(y > rect.top + rect.height / 2);
+  }
+
+  function outside() { // slower, but able to figure out any position
+    const countChildren = dropTarget.children.length;
+    let i;
+    let el;
+    let rect;
+    for (i = 0; i < countChildren; i++) {
+      el = dropTarget.children[i];
+      rect = el.getBoundingClientRect();
+      if (horizontal && (rect.left + rect.width / 2) > x) { return el; }
+      if (!horizontal && (rect.top + rect.height / 2) > y) { return el; }
+    }
+
+    return null;
+  }
+
+  return target !== dropTarget ? inside() : outside();
 }
 
 module.exports = dragula;
