@@ -2,7 +2,7 @@
 
 var test = require('tape');
 var events = require('./lib/events');
-var dragula = require('..');
+var dragula = require('../src/dragula');
 
 test('remove does not throw when not dragging', function (t) {
   t.test('a single time', function once (st) {

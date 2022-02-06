@@ -1,7 +1,7 @@
 'use strict';
 
 var test = require('tape');
-var dragula = require('..');
+var dragula = require('../src/dragula');
 
 test('drake defaults to no containers', function (t) {
   var drake = dragula();

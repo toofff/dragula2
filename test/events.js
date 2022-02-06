@@ -2,7 +2,7 @@
 
 var test = require('tape');
 var events = require('./lib/events');
-var dragula = require('..');
+var dragula = require('../src/dragula');
 
 test('.start() emits "cloned" for copies', function (t) {
   var div = document.createElement('div');

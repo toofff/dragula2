@@ -1,7 +1,7 @@
 'use strict';
 
 var test = require('tape');
-var dragula = require('..');
+var dragula = require('../src/dragula');
 
 test('destroy does not throw when not dragging, destroyed, or whatever', function (t) {
   t.test('a single time', function once (st) {

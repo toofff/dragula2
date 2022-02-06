@@ -14,7 +14,7 @@
     "url": "https://github.com/bevacqua/dragula.git"
   },
   "scripts": {
-    "scripts": "jshint . && browserify src/dragula.js --standalone dragula --debug --outfile dist/dragula.js && uglifyjs --mangle --compress --source-map url=dragula.min.js.map --output dist/dragula.min.js dist/dragula.js",
+    "scripts": "browserify src/dragula.js --standalone dragula --debug --outfile dist/dragula.js && uglifyjs --mangle --compress --source-map url=dragula.min.js.map --output dist/dragula.min.js dist/dragula.js",
     "start": "pnpm run watch:example && pnpm run watch:dragula  && pnpm run generate:styles && pnpm run generate:styles:minify",
     "build": "pnpm run scripts && pnpm run generate:styles && pnpm run generate:styles:minify",
     "deploy": "pnpm run build && pnpm run deployment && pnpm run sync",
@@ -23,7 +23,7 @@
     "generate:styles:minify": "cleancss -O2 --source-map src/dragula.css --output dist/dragula.min.css",
     "lint": "jshint . --reporter node_modules/jshint-stylish/index.js",
     "sync": "git checkout gh-pages ; git merge master ; git push ; git checkout master",
-    "test": "pnpm run lint && browserify test/*.js | tape-run",
+    "test": "browserify --debug test/*.js | tape-run",
     "test-watch": "hihat test/*.js -p tap-dev-tool",
     "watch:dragula": "watchify -dvs dragula --outfile dist/dragula.js src/dragula.js",
     "watch:example": "watchify --debug --verbose --outfile example/example.min.js example/example.js"

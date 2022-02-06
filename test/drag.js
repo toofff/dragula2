@@ -2,7 +2,7 @@
 
 var test = require('tape');
 var events = require('./lib/events');
-var dragula = require('..');
+var dragula = require('../src/dragula');
 
 test('drag event gets emitted when clicking an item', function (t) {
   testCase('works for left clicks', { which: 1 });

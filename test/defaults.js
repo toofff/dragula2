@@ -1,7 +1,7 @@
 'use strict';
 
 var test = require('tape');
-var dragula = require('..');
+var dragula = require('../src/dragula');
 
 test('drake has sensible default options', function (t) {
   var options = {};

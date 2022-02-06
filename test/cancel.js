@@ -1,7 +1,7 @@
 'use strict';
 
 var test = require('tape');
-var dragula = require('..');
+var dragula = require('../src/dragula');
 
 test('cancel does not throw when not dragging', function (t) {
   t.test('a single time', function once (st) {

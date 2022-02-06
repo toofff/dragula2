@@ -1,7 +1,7 @@
 'use strict';
 
 var test = require('tape');
-var dragula = require('..');
+var dragula = require('../src/dragula');
 
 test('drake can be instantiated without throwing', function (t) {
   t.doesNotThrow(drakeFactory, 'calling dragula() without arguments does not throw');

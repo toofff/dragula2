@@ -1,9 +1,6 @@
-[![logo.png][3]][2]
+[![Dragula repository][logo_dragula]][link_repository_dragula]
 
-[![Travis CI][5]][4]
-[![Dependencies][6]][7]
-[![Dev Dependencies][17]][18]
-[![Patreon][19]][20]
+[![GitHub Actions for Dragula][link_github_ci_svg]][link_github_ci]
 
 > Drag and drop so simple it hurts
 
@@ -11,15 +8,15 @@ Browser support includes every sane browser and **IE7+**. <sub>_(Granted you pol
 
 Framework support includes vanilla JavaScript, Angular, and React.
 
-- Official [Angular bridge][8] for `dragula` [_(demo)_][10]
-- Official [Angular 2 bridge][22] for `dragula` [_(demo)_][23]
-- Official [React bridge][9] for `dragula` [_(demo)_][11]
+- Official [AngularJs bridge][link_angularjs_bridge] for `dragula` [_(demo)_][demo_link_angularjs_bridge]
+- Official [Angular bridge][link_angular_bridge] for `dragula` [_(demo)_][demo_link_angular_bridge]
+- Official [React bridge][link_react_bridge] for `dragula` [_(demo)_][demo_link_react_bridge]
 
 # Demo
 
-[![demo.png][1]][2]
+[![Dragula Demo][picture_dragula]][link_repository_dragula]
 
-Try out the [demo][2]!
+Try out the [demo][link_repository_dragula]!
 
 # Inspiration
 
@@ -44,11 +41,11 @@ npm install dragula --save
 
 Or a CDN.
 
-```shell
+```html
 <script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/$VERSION/dragula.min.js'></script>
 ```
 
-If you're not using either package manager, you can use `dragula` by downloading the [files in the `dist` folder][15]. We **strongly suggest** using `npm`, though.
+If you're not using either package manager, you can use `dragula` by downloading the [files in the `dist` folder][link_dist_folder]. We **strongly suggest** using `npm`, though.
 
 ##### Including the JavaScript
 
@@ -58,9 +55,9 @@ Place `dragula` in the `<body>`, instead.
 
 ##### Including the CSS!
 
-There's [a few CSS styles][16] you need to incorporate in order for `dragula` to work as expected.
+There's [a few CSS styles][#css] you need to incorporate in order for `dragula` to work as expected.
 
-You can add them by including [`dist/dragula.min.css`][13] in your document. If you're using Stylus, you can include the styles using the directive below.
+You can add them by including [`dist/dragula.min.css`][link_minified_css_file] in your document. If you're using Stylus, you can include the styles using the directive below.
 
 ```styl
 @import 'node_modules/dragula/dragula'
@@ -293,7 +290,7 @@ Removes all drag and drop events used by `dragula` to manage drag and drop betwe
 
 ## CSS
 
-Dragula uses only four CSS classes. Their purpose is quickly explained below, but you can check [`dist/dragula.min.css`][13] to see the corresponding CSS rules.
+Dragula uses only four CSS classes. Their purpose is quickly explained below, but you can check [`dist/dragula.min.css`][link_minified_css_file] to see the corresponding CSS rules.
 
 - `gu-unselectable` is added to the `mirrorContainer` element when dragging. You can use it to style the `mirrorContainer` while something is being dragged.
 - `gu-transit` is added to the source element when its mirror image is dragged. It just adds opacity to it.
@@ -302,36 +299,23 @@ Dragula uses only four CSS classes. Their purpose is quickly explained below, bu
 
 # Contributing
 
-See [contributing.markdown][14] for details.
-
-# Support
-
-We have a [dedicated support channel in Slack][24]. See [this issue][21] to get an invite. Support requests won't be handled through the repository.
+See [CONTRIBUTING.md][link_contributing_file] for details.
 
 # License
 
 MIT
 
-[1]: https://github.com/bevacqua/dragula/blob/master/resources/demo.png
-[2]: http://bevacqua.github.io/dragula/
-[3]: https://github.com/bevacqua/dragula/blob/master/resources/logo.png
-[4]: https://travis-ci.org/bevacqua/dragula
-[5]: https://travis-ci.org/bevacqua/dragula.svg
-[6]: https://david-dm.org/bevacqua/dragula.svg
-[7]: https://david-dm.org/bevacqua/dragula
-[8]: https://github.com/bevacqua/angularjs-dragula
-[9]: https://github.com/bevacqua/react-dragula
-[10]: http://bevacqua.github.io/angularjs-dragula/
-[11]: http://bevacqua.github.io/react-dragula/
-[13]: https://github.com/bevacqua/dragula/blob/master/dist/dragula.min.css
-[14]: https://github.com/bevacqua/dragula/blob/master/.github/contributing.markdown
-[15]: https://github.com/bevacqua/dragula/blob/master/dist
-[16]: #css
-[17]: https://david-dm.org/bevacqua/dragula/dev-status.svg
-[18]: https://david-dm.org/bevacqua/dragula#info=devDependencies
-[19]: https://rawgit.com/bevacqua/dragula/master/resources/patreon.svg
-[20]: https://patreon.com/bevacqua
-[21]: https://github.com/bevacqua/dragula/issues/248
-[22]: https://github.com/valor-software/ng2-dragula
-[23]: http://valor-software.com/ng2-dragula/index.html
-[24]: https://dragula.slack.com
+[demo_link_angular_bridge]: http://valor-software.com/ng2-dragula/index.html
+[demo_link_angularjs_bridge]: http://bevacqua.github.io/angularjs-dragula/
+[demo_link_react_bridge]: http://bevacqua.github.io/react-dragula/
+[picture_dragula]: https://github.com/bevacqua/dragula/blob/master/resources/demo.png
+[link_angular_bridge]: https://github.com/valor-software/ng2-dragula
+[link_angularjs_bridge]: https://github.com/bevacqua/angularjs-dragula
+[link_contributing_file]: https://github.com/toofff/dragula/blob/master/.github/CONTRIBUTING.md
+[link_dist_folder]: https://github.com/bevacqua/dragula/blob/master/dist
+[link_github_ci]: https://github.com/toofff/dragula/actions?query=workflow%3AContinuous%20Integration+branch%3Amaster
+[link_github_ci_svg]: https://github.com/toofff/dragula/workflows/Continuous%20Integration/badge.svg?branch=master
+[link_minified_css_file]: https://github.com/bevacqua/dragula/blob/master/dist/dragula.min.css
+[link_react_bridge]: https://github.com/bevacqua/react-dragula
+[link_repository_dragula]: http://bevacqua.github.io/dragula/
+[logo_dragula]: https://github.com/bevacqua/dragula/blob/master/resources/logo.png
