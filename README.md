@@ -60,7 +60,7 @@ Place `dragula` in the `<body>`, instead.
 
 There's [a few CSS styles][16] you need to incorporate in order for `dragula` to work as expected.
 
-You can add them by including [`dist/dragula.css`][12] or [`dist/dragula.min.css`][13] in your document. If you're using Stylus, you can include the styles using the directive below.
+You can add them by including [`dist/dragula.min.css`][13] in your document. If you're using Stylus, you can include the styles using the directive below.
 
 ```styl
 @import 'node_modules/dragula/dragula'
@@ -293,7 +293,7 @@ Removes all drag and drop events used by `dragula` to manage drag and drop betwe
 
 ## CSS
 
-Dragula uses only four CSS classes. Their purpose is quickly explained below, but you can check [`dist/dragula.css`][12] to see the corresponding CSS rules.
+Dragula uses only four CSS classes. Their purpose is quickly explained below, but you can check [`dist/dragula.min.css`][13] to see the corresponding CSS rules.
 
 - `gu-unselectable` is added to the `mirrorContainer` element when dragging. You can use it to style the `mirrorContainer` while something is being dragged.
 - `gu-transit` is added to the source element when its mirror image is dragged. It just adds opacity to it.
@@ -323,7 +323,6 @@ MIT
 [9]: https://github.com/bevacqua/react-dragula
 [10]: http://bevacqua.github.io/angularjs-dragula/
 [11]: http://bevacqua.github.io/react-dragula/
-[12]: https://github.com/bevacqua/dragula/blob/master/dist/dragula.css
 [13]: https://github.com/bevacqua/dragula/blob/master/dist/dragula.min.css
 [14]: https://github.com/bevacqua/dragula/blob/master/.github/contributing.markdown
 [15]: https://github.com/bevacqua/dragula/blob/master/dist
