@@ -1,54 +1,53 @@
-'use strict';
+const emitter = require('contra/emitter');
+const crossvent = require('crossvent');
+const classes = require('./classes');
 
-var emitter = require('contra/emitter');
-var crossvent = require('crossvent');
-var classes = require('./classes');
-var doc = document;
-var documentElement = doc.documentElement;
+const doc = document;
+const { documentElement } = doc;
 
-function dragula (initialContainers, options) {
-  var len = arguments.length;
+function dragula(initialContainers, options) {
+  const len = arguments.length;
   if (len === 1 && Array.isArray(initialContainers) === false) {
     options = initialContainers;
     initialContainers = [];
   }
-  var _mirror; // mirror image
-  var _source; // source container
-  var _item; // item being dragged
-  var _offsetX; // reference x
-  var _offsetY; // reference y
-  var _moveX; // reference move x
-  var _moveY; // reference move y
-  var _initialSibling; // reference sibling when grabbed
-  var _currentSibling; // reference sibling now
-  var _copy; // item used for copying
-  var _renderTimer; // timer for setTimeout renderMirrorImage
-  var _lastDropTarget = null; // last container item was over
-  var _grabbed; // holds mousedown context until first mousemove
+  let _mirror; // mirror image
+  let _source; // source container
+  let _item; // item being dragged
+  let _offsetX; // reference x
+  let _offsetY; // reference y
+  let _moveX; // reference move x
+  let _moveY; // reference move y
+  let _initialSibling; // reference sibling when grabbed
+  let _currentSibling; // reference sibling now
+  let _copy; // item used for copying
+  let _renderTimer; // timer for setTimeout renderMirrorImage
+  let _lastDropTarget = null; // last container item was over
+  let _grabbed; // holds mousedown context until first mousemove
 
-  var o = options || {};
-  if (o.moves === void 0) { o.moves = always; }
-  if (o.accepts === void 0) { o.accepts = always; }
-  if (o.invalid === void 0) { o.invalid = invalidTarget; }
-  if (o.containers === void 0) { o.containers = initialContainers || []; }
-  if (o.isContainer === void 0) { o.isContainer = never; }
-  if (o.copy === void 0) { o.copy = false; }
-  if (o.copySortSource === void 0) { o.copySortSource = false; }
-  if (o.revertOnSpill === void 0) { o.revertOnSpill = false; }
-  if (o.removeOnSpill === void 0) { o.removeOnSpill = false; }
-  if (o.direction === void 0) { o.direction = 'vertical'; }
-  if (o.ignoreInputTextSelection === void 0) { o.ignoreInputTextSelection = true; }
-  if (o.mirrorContainer === void 0) { o.mirrorContainer = doc.body; }
+  const o = options || {};
+  if (o.moves === undefined) { o.moves = always; }
+  if (o.accepts === undefined) { o.accepts = always; }
+  if (o.invalid === undefined) { o.invalid = invalidTarget; }
+  if (o.containers === undefined) { o.containers = initialContainers || []; }
+  if (o.isContainer === undefined) { o.isContainer = never; }
+  if (o.copy === undefined) { o.copy = false; }
+  if (o.copySortSource === undefined) { o.copySortSource = false; }
+  if (o.revertOnSpill === undefined) { o.revertOnSpill = false; }
+  if (o.removeOnSpill === undefined) { o.removeOnSpill = false; }
+  if (o.direction === undefined) { o.direction = 'vertical'; }
+  if (o.ignoreInputTextSelection === undefined) { o.ignoreInputTextSelection = true; }
+  if (o.mirrorContainer === undefined) { o.mirrorContainer = doc.body; }
 
-  var drake = emitter({
+  const drake = emitter({
     containers: o.containers,
     start: manualStart,
-    end: end,
-    cancel: cancel,
-    remove: remove,
-    destroy: destroy,
-    canMove: canMove,
-    dragging: false
+    end,
+    cancel,
+    remove,
+    destroy,
+    canMove,
+    dragging: false,
   });
 
   if (o.removeOnSpill === true) {
@@ -59,48 +58,48 @@ function dragula (initialContainers, options) {
 
   return drake;
 
-  function isContainer (el) {
+  function isContainer(el) {
     return drake.containers.indexOf(el) !== -1 || o.isContainer(el);
   }
 
-  function events (remove) {
-    var op = remove ? 'remove' : 'add';
+  function events(isRemove) {
+    const op = isRemove ? 'remove' : 'add';
     touchy(documentElement, op, 'mousedown', grab);
     touchy(documentElement, op, 'mouseup', release);
   }
 
-  function eventualMovements (remove) {
-    var op = remove ? 'remove' : 'add';
+  function eventualMovements(isRemove) {
+    const op = isRemove ? 'remove' : 'add';
     touchy(documentElement, op, 'mousemove', startBecauseMouseMoved);
   }
 
-  function movements (remove) {
-    var op = remove ? 'remove' : 'add';
+  function movements(isRemove) {
+    const op = isRemove ? 'remove' : 'add';
     crossvent[op](documentElement, 'selectstart', preventGrabbed); // IE8
     crossvent[op](documentElement, 'click', preventGrabbed);
   }
 
-  function destroy () {
+  function destroy() {
     events(true);
     release({});
   }
 
-  function preventGrabbed (e) {
+  function preventGrabbed(e) {
     if (_grabbed) {
       e.preventDefault();
     }
   }
 
-  function grab (e) {
+  function grab(e) {
     _moveX = e.clientX;
     _moveY = e.clientY;
 
-    var ignore = whichMouseButton(e) !== 1 || e.metaKey || e.ctrlKey;
+    const ignore = whichMouseButton(e) !== 1 || e.metaKey || e.ctrlKey;
     if (ignore) {
       return; // we only care about honest-to-god left clicks and touch events
     }
-    var item = e.target;
-    var context = canStart(item);
+    const item = e.target;
+    const context = canStart(item);
     if (!context) {
       return;
     }
@@ -115,37 +114,39 @@ function dragula (initialContainers, options) {
     }
   }
 
-  function startBecauseMouseMoved (e) {
+  function startBecauseMouseMoved(e) {
     if (!_grabbed) {
       return;
     }
     if (whichMouseButton(e) === 0) {
       release({});
-      return; // when text is selected on an input and then dragged, mouseup doesn't fire. this is our only hope
+      // when text is selected on an input and then dragged, mouseup doesn't fire.
+      // this is our only hope
+      return;
     }
 
     // truthy check fixes #239, equality fixes #207, fixes #501
-    if ((e.clientX !== void 0 && Math.abs(e.clientX - _moveX) <= (o.slideFactorX || 0)) &&
-      (e.clientY !== void 0 && Math.abs(e.clientY - _moveY) <= (o.slideFactorY || 0))) {
+    if ((e.clientX !== undefined && Math.abs(e.clientX - _moveX) <= (o.slideFactorX || 0))
+      && (e.clientY !== undefined && Math.abs(e.clientY - _moveY) <= (o.slideFactorY || 0))) {
       return;
     }
 
     if (o.ignoreInputTextSelection) {
-      var clientX = getCoord('clientX', e) || 0;
-      var clientY = getCoord('clientY', e) || 0;
-      var elementBehindCursor = doc.elementFromPoint(clientX, clientY);
+      const clientX = getCoord('clientX', e) || 0;
+      const clientY = getCoord('clientY', e) || 0;
+      const elementBehindCursor = doc.elementFromPoint(clientX, clientY);
       if (isInput(elementBehindCursor)) {
         return;
       }
     }
 
-    var grabbed = _grabbed; // call to end() unsets _grabbed
+    const grabbed = _grabbed; // call to end() unsets _grabbed
     eventualMovements(true);
     movements();
     end();
     start(grabbed);
 
-    var offset = getOffset(_item);
+    const offset = getOffset(_item);
     _offsetX = getCoord('pageX', e) - offset.left;
     _offsetY = getCoord('pageY', e) - offset.top;
 
@@ -154,14 +155,14 @@ function dragula (initialContainers, options) {
     drag(e);
   }
 
-  function canStart (item) {
+  function canStart(item) {
     if (drake.dragging && _mirror) {
       return;
     }
     if (isContainer(item)) {
       return; // don't drag container itself
     }
-    var handle = item;
+    const handle = item;
     while (getParent(item) && isContainer(getParent(item)) === false) {
       if (o.invalid(item, handle)) {
         return;
@@ -171,7 +172,7 @@ function dragula (initialContainers, options) {
         return;
       }
     }
-    var source = getParent(item);
+    const source = getParent(item);
     if (!source) {
       return;
     }
@@ -179,29 +180,29 @@ function dragula (initialContainers, options) {
       return;
     }
 
-    var movable = o.moves(item, source, handle, nextEl(item));
+    const movable = o.moves(item, source, handle, nextEl(item));
     if (!movable) {
       return;
     }
 
     return {
-      item: item,
-      source: source
+      item,
+      source,
     };
   }
 
-  function canMove (item) {
+  function canMove(item) {
     return !!canStart(item);
   }
 
-  function manualStart (item) {
-    var context = canStart(item);
+  function manualStart(item) {
+    const context = canStart(item);
     if (context) {
       start(context);
     }
   }
 
-  function start (context) {
+  function start(context) {
     if (isCopy(context.item, context.source)) {
       _copy = context.item.cloneNode(true);
       drake.emit('cloned', _copy, context.item, 'copy');
@@ -215,35 +216,35 @@ function dragula (initialContainers, options) {
     drake.emit('drag', _item, _source);
   }
 
-  function invalidTarget () {
+  function invalidTarget() {
     return false;
   }
 
-  function end () {
+  function end() {
     if (!drake.dragging) {
       return;
     }
-    var item = _copy || _item;
+    const item = _copy || _item;
     drop(item, getParent(item));
   }
 
-  function ungrab () {
+  function ungrab() {
     _grabbed = false;
     eventualMovements(true);
     movements(true);
   }
 
-  function release (e) {
+  function release(e) {
     ungrab();
 
     if (!drake.dragging) {
       return;
     }
-    var item = _copy || _item;
-    var clientX = getCoord('clientX', e) || 0;
-    var clientY = getCoord('clientY', e) || 0;
-    var elementBehindCursor = getElementBehindPoint(_mirror, clientX, clientY);
-    var dropTarget = findDropTarget(elementBehindCursor, clientX, clientY);
+    const item = _copy || _item;
+    const clientX = getCoord('clientX', e) || 0;
+    const clientY = getCoord('clientY', e) || 0;
+    const elementBehindCursor = getElementBehindPoint(_mirror, clientX, clientY);
+    const dropTarget = findDropTarget(elementBehindCursor, clientX, clientY);
     if (dropTarget && ((_copy && o.copySortSource) || (!_copy || dropTarget !== _source))) {
       drop(item, dropTarget);
     } else if (o.removeOnSpill) {
@@ -253,8 +254,8 @@ function dragula (initialContainers, options) {
     }
   }
 
-  function drop (item, target) {
-    var parent = getParent(item);
+  function drop(item, target) {
+    const parent = getParent(item);
     if (_copy && o.copySortSource && target === _source) {
       parent.removeChild(_item);
     }
@@ -266,12 +267,12 @@ function dragula (initialContainers, options) {
     cleanup();
   }
 
-  function remove () {
+  function remove() {
     if (!drake.dragging) {
       return;
     }
-    var item = _copy || _item;
-    var parent = getParent(item);
+    const item = _copy || _item;
+    const parent = getParent(item);
     if (parent) {
       parent.removeChild(item);
     }
@@ -279,14 +280,14 @@ function dragula (initialContainers, options) {
     cleanup();
   }
 
-  function cancel (revert) {
+  function cancel(revert) {
     if (!drake.dragging) {
       return;
     }
-    var reverts = arguments.length > 0 ? revert : o.revertOnSpill;
-    var item = _copy || _item;
-    var parent = getParent(item);
-    var initial = isInitialPlacement(parent);
+    const reverts = arguments.length > 0 ? revert : o.revertOnSpill;
+    const item = _copy || _item;
+    const parent = getParent(item);
+    const initial = isInitialPlacement(parent);
     if (initial === false && reverts) {
       if (_copy) {
         if (parent) {
@@ -304,8 +305,8 @@ function dragula (initialContainers, options) {
     cleanup();
   }
 
-  function cleanup () {
-    var item = _copy || _item;
+  function cleanup() {
+    const item = _copy || _item;
     ungrab();
     removeMirrorImage();
     if (item) {
@@ -322,9 +323,9 @@ function dragula (initialContainers, options) {
     _source = _item = _copy = _initialSibling = _currentSibling = _renderTimer = _lastDropTarget = null;
   }
 
-  function isInitialPlacement (target, s) {
-    var sibling;
-    if (s !== void 0) {
+  function isInitialPlacement(target, s) {
+    let sibling;
+    if (s !== undefined) {
       sibling = s;
     } else if (_mirror) {
       sibling = _currentSibling;
@@ -334,22 +335,22 @@ function dragula (initialContainers, options) {
     return target === _source && sibling === _initialSibling;
   }
 
-  function findDropTarget (elementBehindCursor, clientX, clientY) {
-    var target = elementBehindCursor;
+  function findDropTarget(elementBehindCursor, clientX, clientY) {
+    let target = elementBehindCursor;
     while (target && !accepted()) {
       target = getParent(target);
     }
     return target;
 
-    function accepted () {
-      var droppable = isContainer(target);
+    function accepted() {
+      const droppable = isContainer(target);
       if (droppable === false) {
         return false;
       }
 
-      var immediate = getImmediateChild(target, elementBehindCursor);
-      var reference = getReference(target, immediate, clientX, clientY);
-      var initial = isInitialPlacement(target, reference);
+      const immediate = getImmediateChild(target, elementBehindCursor);
+      const reference = getReference(target, immediate, clientX, clientY);
+      const initial = isInitialPlacement(target, reference);
       if (initial) {
         return true; // should always be able to drop it right back where it was
       }
@@ -357,38 +358,38 @@ function dragula (initialContainers, options) {
     }
   }
 
-  function drag (e) {
+  function drag(e) {
     if (!_mirror) {
       return;
     }
     e.preventDefault();
 
-    var clientX = getCoord('clientX', e) || 0;
-    var clientY = getCoord('clientY', e) || 0;
-    var x = clientX - _offsetX;
-    var y = clientY - _offsetY;
+    const clientX = getCoord('clientX', e) || 0;
+    const clientY = getCoord('clientY', e) || 0;
+    const x = clientX - _offsetX;
+    const y = clientY - _offsetY;
 
-    _mirror.style.left = x + 'px';
-    _mirror.style.top = y + 'px';
+    _mirror.style.left = `${x}px`;
+    _mirror.style.top = `${y}px`;
 
-    var item = _copy || _item;
-    var elementBehindCursor = getElementBehindPoint(_mirror, clientX, clientY);
-    var dropTarget = findDropTarget(elementBehindCursor, clientX, clientY);
-    var changed = dropTarget !== null && dropTarget !== _lastDropTarget;
+    const item = _copy || _item;
+    const elementBehindCursor = getElementBehindPoint(_mirror, clientX, clientY);
+    let dropTarget = findDropTarget(elementBehindCursor, clientX, clientY);
+    const changed = dropTarget !== null && dropTarget !== _lastDropTarget;
     if (changed || dropTarget === null) {
       out();
       _lastDropTarget = dropTarget;
       over();
     }
-    var parent = getParent(item);
+    const parent = getParent(item);
     if (dropTarget === _source && _copy && !o.copySortSource) {
       if (parent) {
         parent.removeChild(item);
       }
       return;
     }
-    var reference;
-    var immediate = getImmediateChild(dropTarget, elementBehindCursor);
+    let reference;
+    const immediate = getImmediateChild(dropTarget, elementBehindCursor);
     if (immediate !== null) {
       reference = getReference(dropTarget, immediate, clientX, clientY);
     } else if (o.revertOnSpill === true && !_copy) {
@@ -401,35 +402,35 @@ function dragula (initialContainers, options) {
       return;
     }
     if (
-      (reference === null && changed) ||
-      reference !== item &&
-      reference !== nextEl(item)
+      (reference === null && changed)
+      || reference !== item
+      && reference !== nextEl(item)
     ) {
       _currentSibling = reference;
       dropTarget.insertBefore(item, reference);
       drake.emit('shadow', item, dropTarget, _source);
     }
-    function moved (type) { drake.emit(type, item, _lastDropTarget, _source); }
-    function over () { if (changed) { moved('over'); } }
-    function out () { if (_lastDropTarget) { moved('out'); } }
+    function moved(type) { drake.emit(type, item, _lastDropTarget, _source); }
+    function over() { if (changed) { moved('over'); } }
+    function out() { if (_lastDropTarget) { moved('out'); } }
   }
 
-  function spillOver (el) {
+  function spillOver(el) {
     classes.rm(el, 'gu-hide');
   }
 
-  function spillOut (el) {
+  function spillOut(el) {
     if (drake.dragging) { classes.add(el, 'gu-hide'); }
   }
 
-  function renderMirrorImage () {
+  function renderMirrorImage() {
     if (_mirror) {
       return;
     }
-    var rect = _item.getBoundingClientRect();
+    const rect = _item.getBoundingClientRect();
     _mirror = _item.cloneNode(true);
-    _mirror.style.width = getRectWidth(rect) + 'px';
-    _mirror.style.height = getRectHeight(rect) + 'px';
+    _mirror.style.width = `${getRectWidth(rect)}px`;
+    _mirror.style.height = `${getRectHeight(rect)}px`;
     classes.rm(_mirror, 'gu-transit');
     classes.add(_mirror, 'gu-mirror');
     o.mirrorContainer.appendChild(_mirror);
@@ -438,7 +439,7 @@ function dragula (initialContainers, options) {
     drake.emit('cloned', _mirror, _item, 'mirror');
   }
 
-  function removeMirrorImage () {
+  function removeMirrorImage() {
     if (_mirror) {
       classes.rm(o.mirrorContainer, 'gu-unselectable');
       touchy(documentElement, 'remove', 'mousemove', drag);
@@ -447,8 +448,8 @@ function dragula (initialContainers, options) {
     }
   }
 
-  function getImmediateChild (dropTarget, target) {
-    var immediate = target;
+  function getImmediateChild(dropTarget, target) {
+    let immediate = target;
     while (immediate !== dropTarget && getParent(immediate) !== dropTarget) {
       immediate = getParent(immediate);
     }
@@ -458,17 +459,17 @@ function dragula (initialContainers, options) {
     return immediate;
   }
 
-  function getReference (dropTarget, target, x, y) {
-    var horizontal = o.direction === 'horizontal';
-    var reference = target !== dropTarget ? inside() : outside();
+  function getReference(dropTarget, target, x, y) {
+    const horizontal = o.direction === 'horizontal';
+    const reference = target !== dropTarget ? inside() : outside();
     return reference;
 
-    function outside () { // slower, but able to figure out any position
-      var len = dropTarget.children.length;
-      var i;
-      var el;
-      var rect;
-      for (i = 0; i < len; i++) {
+    function outside() { // slower, but able to figure out any position
+      const countChildren = dropTarget.children.length;
+      let i;
+      let el;
+      let rect;
+      for (i = 0; i < countChildren; i++) {
         el = dropTarget.children[i];
         rect = el.getBoundingClientRect();
         if (horizontal && (rect.left + rect.width / 2) > x) { return el; }
@@ -477,39 +478,39 @@ function dragula (initialContainers, options) {
       return null;
     }
 
-    function inside () { // faster, but only available if dropped inside a child element
-      var rect = target.getBoundingClientRect();
+    function inside() { // faster, but only available if dropped inside a child element
+      const rect = target.getBoundingClientRect();
       if (horizontal) {
         return resolve(x > rect.left + getRectWidth(rect) / 2);
       }
       return resolve(y > rect.top + getRectHeight(rect) / 2);
     }
 
-    function resolve (after) {
+    function resolve(after) {
       return after ? nextEl(target) : target;
     }
   }
 
-  function isCopy (item, container) {
+  function isCopy(item, container) {
     return typeof o.copy === 'boolean' ? o.copy : o.copy(item, container);
   }
 }
 
-function touchy (el, op, type, fn) {
-  var touch = {
+function touchy(el, op, type, fn) {
+  const touch = {
     mouseup: 'touchend',
     mousedown: 'touchstart',
-    mousemove: 'touchmove'
+    mousemove: 'touchmove',
   };
-  var pointers = {
+  const pointers = {
     mouseup: 'pointerup',
     mousedown: 'pointerdown',
-    mousemove: 'pointermove'
+    mousemove: 'pointermove',
   };
-  var microsoft = {
+  const microsoft = {
     mouseup: 'MSPointerUp',
     mousedown: 'MSPointerDown',
-    mousemove: 'MSPointerMove'
+    mousemove: 'MSPointerMove',
   };
   if (global.navigator.pointerEnabled) {
     crossvent[op](el, pointers[type], fn);
@@ -521,25 +522,17 @@ function touchy (el, op, type, fn) {
   }
 }
 
-function whichMouseButton (e) {
-  if (e.touches !== void 0) { return e.touches.length; }
-  if (e.which !== void 0 && e.which !== 0) { return e.which; } // see https://github.com/bevacqua/dragula/issues/261
-  if (e.buttons !== void 0) { return e.buttons; }
-  var button = e.button;
-  if (button !== void 0) { // see https://github.com/jquery/jquery/blob/99e8ff1baa7ae341e94bb89c3e84570c7c3ad9ea/src/event.js#L573-L575
+function whichMouseButton(e) {
+  if (e.touches !== undefined) { return e.touches.length; }
+  if (e.which !== undefined && e.which !== 0) { return e.which; } // see https://github.com/bevacqua/dragula/issues/261
+  if (e.buttons !== undefined) { return e.buttons; }
+  const { button } = e;
+  if (button !== undefined) { // see https://github.com/jquery/jquery/blob/99e8ff1baa7ae341e94bb89c3e84570c7c3ad9ea/src/event.js#L573-L575
     return button & 1 ? 1 : button & 2 ? 3 : (button & 4 ? 2 : 0);
   }
 }
 
-function getOffset (el) {
-  var rect = el.getBoundingClientRect();
-  return {
-    left: rect.left + getScroll('scrollLeft', 'pageXOffset'),
-    top: rect.top + getScroll('scrollTop', 'pageYOffset')
-  };
-}
-
-function getScroll (scrollProp, offsetProp) {
+function getScroll(scrollProp, offsetProp) {
   if (typeof global[offsetProp] !== 'undefined') {
     return global[offsetProp];
   }
@@ -549,41 +542,50 @@ function getScroll (scrollProp, offsetProp) {
   return doc.body[scrollProp];
 }
 
-function getElementBehindPoint (point, x, y) {
+function getOffset(el) {
+  const rect = el.getBoundingClientRect();
+  return {
+    left: rect.left + getScroll('scrollLeft', 'pageXOffset'),
+    top: rect.top + getScroll('scrollTop', 'pageYOffset'),
+  };
+}
+
+function getElementBehindPoint(point, x, y) {
   point = point || {};
-  var state = point.className || '';
-  var el;
+  const state = point.className || '';
   point.className += ' gu-hide';
-  el = doc.elementFromPoint(x, y);
+  const el = doc.elementFromPoint(x, y);
   point.className = state;
+
   return el;
 }
 
-function never () { return false; }
-function always () { return true; }
-function getRectWidth (rect) { return rect.width || (rect.right - rect.left); }
-function getRectHeight (rect) { return rect.height || (rect.bottom - rect.top); }
-function getParent (el) { return el.parentNode === doc ? null : el.parentNode; }
-function isInput (el) { return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT' || isEditable(el); }
-function isEditable (el) {
+function never() { return false; }
+function always() { return true; }
+function getRectWidth(rect) { return rect.width || (rect.right - rect.left); }
+function getRectHeight(rect) { return rect.height || (rect.bottom - rect.top); }
+function getParent(el) { return el.parentNode === doc ? null : el.parentNode; }
+function isInput(el) { return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT' || isEditable(el); }
+function isEditable(el) {
   if (!el) { return false; } // no parents were editable
   if (el.contentEditable === 'false') { return false; } // stop the lookup
   if (el.contentEditable === 'true') { return true; } // found a contentEditable element in the chain
   return isEditable(getParent(el)); // contentEditable is set to 'inherit'
 }
 
-function nextEl (el) {
-  return el.nextElementSibling || manually();
-  function manually () {
-    var sibling = el;
+function nextEl(el) {
+  function manually() {
+    let sibling = el;
     do {
       sibling = sibling.nextSibling;
     } while (sibling && sibling.nodeType !== 1);
     return sibling;
   }
+
+  return el.nextElementSibling || manually();
 }
 
-function getEventHost (e) {
+function getEventHost(e) {
   // on touchend event, we have to use `e.changedTouches`
   // see http://stackoverflow.com/questions/7192563/touchend-event-properties
   // see https://github.com/bevacqua/dragula/issues/34
@@ -596,11 +598,11 @@ function getEventHost (e) {
   return e;
 }
 
-function getCoord (coord, e) {
-  var host = getEventHost(e);
-  var missMap = {
+function getCoord(coord, e) {
+  const host = getEventHost(e);
+  const missMap = {
     pageX: 'clientX', // IE8
-    pageY: 'clientY' // IE8
+    pageY: 'clientY', // IE8
   };
   if (coord in missMap && !(coord in host) && missMap[coord] in host) {
     coord = missMap[coord];

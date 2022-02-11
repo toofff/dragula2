@@ -1,0 +1,32 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "script",
+    "ecmaFeatures": {
+      "impliedStrict": true
+    }
+  },
+  "extends": [
+    "eslint:recommended",
+    "airbnb-base"
+  ],
+  "rules": {
+    "consistent-return": "warn",
+    "max-len": "warn",
+    "no-bitwise": "warn",
+    "no-mixed-operators": "warn",
+    "no-multi-assign": "warn",
+    "no-nested-ternary": "warn",
+    "no-param-reassign": "warn",
+    "no-plusplus": "warn",
+    "no-underscore-dangle": "warn",
+    "no-use-before-define": "warn"
+  }
+}
