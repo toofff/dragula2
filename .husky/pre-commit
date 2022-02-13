@@ -1,0 +1,3 @@
+#!/bin/sh
+
+pnpx --no-install lint-staged --allow-empty

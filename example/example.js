@@ -21,7 +21,7 @@ dragula([$('left-rollbacks'), $('right-rollbacks')], { revertOnSpill: true });
 dragula([$('left-lovehandles'), $('right-lovehandles')], {
   moves: function (el, container, handle) {
     return handle.classList.contains('handle');
-  }
+  },
 });
 
 dragula([$('left-rm-spill'), $('right-rm-spill')], { removeOnSpill: true });
@@ -31,14 +31,14 @@ dragula([$('left-copy-1tomany'), $('right-copy-1tomany')], {
   },
   accepts: function (el, target) {
     return target !== $('left-copy-1tomany');
-  }
+  },
 });
 
 dragula([sortable]);
 
 sortable.addEventListener('click', clickHandler);
 
-function clickHandler (e) {
+function clickHandler(e) {
   var target = e.target;
   if (target === sortable) {
     return;
@@ -50,6 +50,6 @@ function clickHandler (e) {
   }, 500);
 }
 
-function $ (id) {
+function $(id) {
   return document.getElementById(id);
 }

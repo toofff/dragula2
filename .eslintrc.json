@@ -13,10 +13,8 @@
       "impliedStrict": true
     }
   },
-  "extends": [
-    "eslint:recommended",
-    "airbnb-base"
-  ],
+  "extends": ["eslint:recommended", "airbnb-base", "prettier"],
+  "plugins": ["prettier"],
   "rules": {
     "consistent-return": "warn",
     "max-len": "warn",

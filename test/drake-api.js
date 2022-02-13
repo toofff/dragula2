@@ -6,7 +6,7 @@ var dragula = require('../src/dragula');
 test('drake can be instantiated without throwing', function (t) {
   t.doesNotThrow(drakeFactory, 'calling dragula() without arguments does not throw');
   t.end();
-  function drakeFactory () {
+  function drakeFactory() {
     return dragula();
   }
 });

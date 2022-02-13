@@ -14,7 +14,7 @@ test('.start() emits "cloned" for copies', function (t) {
   drake.start(item);
   t.plan(3);
   t.end();
-  function cloned (copy, original, type) {
+  function cloned(copy, original, type) {
     if (type === 'copy') {
       t.notEqual(copy, item, 'copy is not a reference to item');
       t.equal(copy.nodeType, item.nodeType, 'copy of original is provided');
@@ -33,7 +33,7 @@ test('.start() emits "drag" for items', function (t) {
   drake.start(item);
   t.plan(2);
   t.end();
-  function drag (original, container) {
+  function drag(original, container) {
     t.equal(original, item, 'item is a reference to moving target');
     t.equal(container, div, 'container matches expected div');
   }
@@ -52,10 +52,10 @@ test('.end() emits "cancel" when not moved', function (t) {
   drake.end();
   t.plan(3);
   t.end();
-  function dragend (original) {
+  function dragend(original) {
     t.equal(original, item, 'item is a reference to moving target');
   }
-  function cancel (original, container) {
+  function cancel(original, container) {
     t.equal(original, item, 'item is a reference to moving target');
     t.equal(container, div, 'container matches expected div');
   }
@@ -77,10 +77,10 @@ test('.end() emits "drop" when moved', function (t) {
   drake.end();
   t.plan(4);
   t.end();
-  function dragend (original) {
+  function dragend(original) {
     t.equal(original, item, 'item is a reference to moving target');
   }
-  function drop (original, target, container) {
+  function drop(original, target, container) {
     t.equal(original, item, 'item is a reference to moving target');
     t.equal(target, div2, 'target matches expected div');
     t.equal(container, div, 'container matches expected div');
@@ -100,10 +100,10 @@ test('.remove() emits "remove" for items', function (t) {
   drake.remove();
   t.plan(3);
   t.end();
-  function dragend (original) {
+  function dragend(original) {
     t.equal(original, item, 'item is a reference to moving target');
   }
-  function remove (original, container) {
+  function remove(original, container) {
     t.equal(original, item, 'item is a reference to moving target');
     t.equal(container, div, 'container matches expected div');
   }
@@ -122,10 +122,10 @@ test('.remove() emits "cancel" for copies', function (t) {
   drake.remove();
   t.plan(4);
   t.end();
-  function dragend () {
+  function dragend() {
     t.pass('dragend got invoked');
   }
-  function cancel (copy, container) {
+  function cancel(copy, container) {
     t.notEqual(copy, item, 'copy is not a reference to item');
     t.equal(copy.nodeType, item.nodeType, 'item is a copy of item');
     t.equal(container, null, 'container matches expectation');
@@ -145,10 +145,10 @@ test('.cancel() emits "cancel" when not moved', function (t) {
   drake.cancel();
   t.plan(3);
   t.end();
-  function dragend (original) {
+  function dragend(original) {
     t.equal(original, item, 'item is a reference to moving target');
   }
-  function cancel (original, container) {
+  function cancel(original, container) {
     t.equal(original, item, 'item is a reference to moving target');
     t.equal(container, div, 'container matches expected div');
   }
@@ -170,10 +170,10 @@ test('.cancel() emits "drop" when not reverted', function (t) {
   drake.cancel();
   t.plan(4);
   t.end();
-  function dragend (original) {
+  function dragend(original) {
     t.equal(original, item, 'item is a reference to moving target');
   }
-  function drop (original, parent, container) {
+  function drop(original, parent, container) {
     t.equal(original, item, 'item is a reference to moving target');
     t.equal(parent, div2, 'parent matches expected div');
     t.equal(container, div, 'container matches expected div');
@@ -196,10 +196,10 @@ test('.cancel() emits "cancel" when reverts', function (t) {
   drake.cancel();
   t.plan(3);
   t.end();
-  function dragend (original) {
+  function dragend(original) {
     t.equal(original, item, 'item is a reference to moving target');
   }
-  function cancel (original, container) {
+  function cancel(original, container) {
     t.equal(original, item, 'item is a reference to moving target');
     t.equal(container, div, 'container matches expected div');
   }
@@ -216,7 +216,7 @@ test('pointerdown emits "cloned" for mirrors', function (t) {
   events.raise(item, 'pointermove', { which: 1 });
   t.plan(3);
   t.end();
-  function cloned (copy, original, type) {
+  function cloned(copy, original, type) {
     if (type === 'mirror') {
       t.notEqual(copy, item, 'mirror is not a reference to item');
       t.equal(copy.nodeType, item.nodeType, 'mirror of original is provided');
@@ -236,7 +236,7 @@ test('pointerdown emits "cloned" for copies', function (t) {
   events.raise(item, 'pointermove', { which: 1 });
   t.plan(3);
   t.end();
-  function cloned (copy, original, type) {
+  function cloned(copy, original, type) {
     if (type === 'copy') {
       t.notEqual(copy, item, 'copy is not a reference to item');
       t.equal(copy.nodeType, item.nodeType, 'copy of original is provided');
@@ -256,7 +256,7 @@ test('pointerdown emits "drag" for items', function (t) {
   events.raise(item, 'pointermove', { which: 1 });
   t.plan(2);
   t.end();
-  function drag (original, container) {
+  function drag(original, container) {
     t.equal(original, item, 'item is a reference to moving target');
     t.equal(container, div, 'container matches expected div');
   }

@@ -5,14 +5,14 @@ var events = require('./lib/events');
 var dragula = require('../src/dragula');
 
 test('remove does not throw when not dragging', function (t) {
-  t.test('a single time', function once (st) {
+  t.test('a single time', function once(st) {
     var drake = dragula();
     st.doesNotThrow(function () {
       drake.remove();
     }, 'dragula ignores a single call to drake.remove');
     st.end();
   });
-  t.test('multiple times', function once (st) {
+  t.test('multiple times', function once(st) {
     var drake = dragula();
     st.doesNotThrow(function () {
       drake.remove();
@@ -50,10 +50,10 @@ test('when dragging and remove gets called, remove event is emitted', function (
   drake.remove();
   t.plan(3);
   t.end();
-  function dragend () {
+  function dragend() {
     t.pass('dragend got called');
   }
-  function remove (target, container) {
+  function remove(target, container) {
     t.equal(target, item, 'remove was invoked with item');
     t.equal(container, div, 'remove was invoked with container');
   }
@@ -72,10 +72,10 @@ test('when dragging a copy and remove gets called, cancel event is emitted', fun
   drake.remove();
   t.plan(4);
   t.end();
-  function dragend () {
+  function dragend() {
     t.pass('dragend got called');
   }
-  function cancel (target, container) {
+  function cancel(target, container) {
     t.equal(target.className, 'gu-transit', 'cancel was invoked with item');
     t.notEqual(target, item, 'item is a copy and not the original');
     t.equal(container, null, 'cancel was invoked with container');

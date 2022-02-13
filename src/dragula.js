@@ -9,7 +9,7 @@ class Dragula extends EventTarget {
       [options, initialContainers] = [initialContainers, []];
     }
 
-    const o = this.options = { ...Dragula.defaultOptions, ...options };
+    const o = (this.options = { ...Dragula.defaultOptions, ...options });
     this.containers = o.containers = o.containers || initialContainers || [];
 
     if (typeof o.copy !== 'function') {
@@ -97,7 +97,8 @@ class Dragula extends EventTarget {
       _grabbed = context;
       eventualMovements();
       if (e.type === 'pointerdown') {
-        if (isInput(item)) { // see also: https://github.com/bevacqua/dragula/issues/208
+        if (isInput(item)) {
+          // see also: https://github.com/bevacqua/dragula/issues/208
           item.focus(); // fixes https://github.com/bevacqua/dragula/issues/176
         } else {
           e.preventDefault(); // fixes https://github.com/bevacqua/dragula/issues/155
@@ -117,8 +118,12 @@ class Dragula extends EventTarget {
       }
 
       // truthy check fixes #239, equality fixes #207, fixes #501
-      if ((e.clientX !== undefined && Math.abs(e.clientX - _moveX) <= (drake.options.slideFactorX || 0))
-        && (e.clientY !== undefined && Math.abs(e.clientY - _moveY) <= (drake.options.slideFactorY || 0))) {
+      if (
+        e.clientX !== undefined
+        && Math.abs(e.clientX - _moveX) <= (drake.options.slideFactorX || 0)
+        && e.clientY !== undefined
+        && Math.abs(e.clientY - _moveY) <= (drake.options.slideFactorY || 0)
+      ) {
         return;
       }
 
@@ -241,7 +246,7 @@ class Dragula extends EventTarget {
       const elementBehindCursor = getElementBehindPoint(_mirror, clientX, clientY);
       const dropTarget = findDropTarget(elementBehindCursor, clientX, clientY);
 
-      if (dropTarget && ((_copy && drake.options.copySortSource) || (!_copy || dropTarget !== _source))) {
+      if (dropTarget && ((_copy && drake.options.copySortSource) || !_copy || dropTarget !== _source)) {
         drop(item, dropTarget);
       } else if (drake.options.removeOnSpill) {
         remove();
@@ -433,11 +438,7 @@ class Dragula extends EventTarget {
         return;
       }
 
-      if (
-        (reference === null && changed)
-        || reference !== item
-        && reference !== item.nextElementSibling
-      ) {
+      if ((reference === null && changed) || (reference !== item && reference !== item.nextElementSibling)) {
         _currentSibling = reference;
         dropTarget.insertBefore(item, reference);
         drake.emit('shadow', {
@@ -454,8 +455,16 @@ class Dragula extends EventTarget {
           source: _source,
         });
       }
-      function over() { if (changed) { moved('over'); } }
-      function out() { if (_lastDropTarget) { moved('out'); } }
+      function over() {
+        if (changed) {
+          moved('over');
+        }
+      }
+      function out() {
+        if (_lastDropTarget) {
+          moved('out');
+        }
+      }
     }
 
     function spillOver(el) {
@@ -545,13 +554,20 @@ function dragula(...args) {
 }
 
 function whichMouseButton(e) {
-  if (e.touches !== undefined) { return e.touches.length; }
-  if (e.which !== undefined && e.which !== 0) { return e.which; } // see https://github.com/bevacqua/dragula/issues/261
-  if (e.buttons !== undefined) { return e.buttons; }
+  if (e.touches !== undefined) {
+    return e.touches.length;
+  }
+  if (e.which !== undefined && e.which !== 0) {
+    return e.which;
+  } // see https://github.com/bevacqua/dragula/issues/261
+  if (e.buttons !== undefined) {
+    return e.buttons;
+  }
 
   const { button } = e;
-  if (button !== undefined) { // see https://github.com/jquery/jquery/blob/99e8ff1baa7ae341e94bb89c3e84570c7c3ad9ea/src/event.js#L573-L575
-    return button & 1 ? 1 : button & 2 ? 3 : (button & 4 ? 2 : 0);
+  if (button !== undefined) {
+    // see https://github.com/jquery/jquery/blob/99e8ff1baa7ae341e94bb89c3e84570c7c3ad9ea/src/event.js#L573-L575
+    return button & 1 ? 1 : button & 2 ? 3 : button & 4 ? 2 : 0;
   }
 }
 
@@ -578,9 +594,15 @@ function getParent(el) {
 }
 
 function isEditable(el) {
-  if (!el) { return false; } // no parents were editable
-  if (el.contentEditable === 'false') { return false; } // stop the lookup
-  if (el.contentEditable === 'true') { return true; } // found a contentEditable element in the chain
+  if (!el) {
+    return false;
+  } // no parents were editable
+  if (el.contentEditable === 'false') {
+    return false;
+  } // stop the lookup
+  if (el.contentEditable === 'true') {
+    return true;
+  } // found a contentEditable element in the chain
 
   return isEditable(getParent(el)); // contentEditable is set to 'inherit'
 }
@@ -609,7 +631,8 @@ function getReference(dropTarget, target, x, y, direction) {
     return after ? target.nextElementSibling : target;
   }
 
-  function inside() { // faster, but only available if dropped inside a child element
+  function inside() {
+    // faster, but only available if dropped inside a child element
     const rect = target.getBoundingClientRect();
     if (horizontal) {
       return resolve(x > rect.left + rect.width / 2);
@@ -618,7 +641,8 @@ function getReference(dropTarget, target, x, y, direction) {
     return resolve(y > rect.top + rect.height / 2);
   }
 
-  function outside() { // slower, but able to figure out any position
+  function outside() {
+    // slower, but able to figure out any position
     const countChildren = dropTarget.children.length;
     let i;
     let el;
@@ -626,8 +650,12 @@ function getReference(dropTarget, target, x, y, direction) {
     for (i = 0; i < countChildren; i++) {
       el = dropTarget.children[i];
       rect = el.getBoundingClientRect();
-      if (horizontal && (rect.left + rect.width / 2) > x) { return el; }
-      if (!horizontal && (rect.top + rect.height / 2) > y) { return el; }
+      if (horizontal && rect.left + rect.width / 2 > x) {
+        return el;
+      }
+      if (!horizontal && rect.top + rect.height / 2 > y) {
+        return el;
+      }
     }
 
     return null;

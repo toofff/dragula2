@@ -4,14 +4,14 @@ var test = require('tape');
 var dragula = require('../src/dragula');
 
 test('cancel does not throw when not dragging', function (t) {
-  t.test('a single time', function once (st) {
+  t.test('a single time', function once(st) {
     var drake = dragula();
     st.doesNotThrow(function () {
       drake.cancel();
     }, 'dragula ignores a single call to drake.cancel');
     st.end();
   });
-  t.test('multiple times', function once (st) {
+  t.test('multiple times', function once(st) {
     var drake = dragula();
     st.doesNotThrow(function () {
       drake.cancel();
@@ -49,10 +49,10 @@ test('when dragging and cancel gets called, cancel event is emitted', function (
   drake.cancel();
   t.plan(3);
   t.end();
-  function dragend () {
+  function dragend() {
     t.pass('dragend got called');
   }
-  function cancel (target, container) {
+  function cancel(target, container) {
     t.equal(target, item, 'cancel was invoked with item');
     t.equal(container, div, 'cancel was invoked with container');
   }
@@ -73,10 +73,10 @@ test('when dragging a copy and cancel gets called, default does not revert', fun
   drake.cancel();
   t.plan(4);
   t.end();
-  function dragend () {
+  function dragend() {
     t.pass('dragend got called');
   }
-  function drop (target, parent, source) {
+  function drop(target, parent, source) {
     t.equal(target, item, 'drop was invoked with item');
     t.equal(parent, div2, 'drop was invoked with final container');
     t.equal(source, div, 'drop was invoked with source container');
@@ -98,10 +98,10 @@ test('when dragging a copy and cancel gets called, revert is executed', function
   drake.cancel(true);
   t.plan(3);
   t.end();
-  function dragend () {
+  function dragend() {
     t.pass('dragend got called');
   }
-  function cancel (target, container) {
+  function cancel(target, container) {
     t.equal(target, item, 'cancel was invoked with item');
     t.equal(container, div, 'cancel was invoked with container');
   }

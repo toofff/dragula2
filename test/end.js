@@ -4,14 +4,14 @@ var test = require('tape');
 var dragula = require('../src/dragula');
 
 test('end does not throw when not dragging', function (t) {
-  t.test('a single time', function once (st) {
+  t.test('a single time', function once(st) {
     var drake = dragula();
     st.doesNotThrow(function () {
       drake.end();
     }, 'dragula ignores a single call to drake.end');
     st.end();
   });
-  t.test('multiple times', function once (st) {
+  t.test('multiple times', function once(st) {
     var drake = dragula();
     st.doesNotThrow(function () {
       drake.end();
@@ -39,10 +39,10 @@ test('when already dragging, .end() ends (cancels) previous drag', function (t) 
   t.plan(4);
   t.equal(drake.dragging, false, 'final state is: drake is not dragging');
   t.end();
-  function end (item) {
+  function end(item) {
     t.equal(item, item1, 'dragend invoked with correct item');
   }
-  function cancel (item, source) {
+  function cancel(item, source) {
     t.equal(item, item1, 'cancel invoked with correct item');
     t.equal(source, div, 'cancel invoked with correct source');
   }
@@ -66,10 +66,10 @@ test('when already dragged, ends (drops) previous drag', function (t) {
   t.plan(5);
   t.equal(drake.dragging, false, 'final state is: drake is not dragging');
   t.end();
-  function end (item) {
+  function end(item) {
     t.equal(item, item1, 'dragend invoked with correct item');
   }
-  function drop (item, target, source) {
+  function drop(item, target, source) {
     t.equal(item, item1, 'drop invoked with correct item');
     t.equal(source, div, 'drop invoked with correct source');
     t.equal(target, div2, 'drop invoked with correct target');

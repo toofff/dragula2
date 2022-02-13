@@ -16,8 +16,8 @@ test('drag event gets emitted when clicking an item', function (t) {
   testCase('fails whenever invalid returns true', { which: 1 }, { passes: false, dragulaOpts: { invalid: always } });
   testCase('fails whenever moves returns false', { which: 1 }, { passes: false, dragulaOpts: { moves: never } });
   t.end();
-  function testCase (desc, eventOptions, options) {
-    t.test(desc, function subtest (st) {
+  function testCase(desc, eventOptions, options) {
+    t.test(desc, function subtest(st) {
       var o = options || {};
       var div = document.createElement('div');
       var item = document.createElement(o.tag || 'div');
@@ -31,7 +31,7 @@ test('drag event gets emitted when clicking an item', function (t) {
       st.plan(passes ? 4 : 1);
       st.equal(drake.dragging, passes, desc + ': final state is drake is ' + (passes ? '' : 'not ') + 'dragging');
       st.end();
-      function drag (target, container) {
+      function drag(target, container) {
         st[passes ? 'pass' : 'fail'](desc + ': drag event was emitted synchronously');
         st.equal(target, item, desc + ': first argument is selected item');
         st.equal(container, div, desc + ': second argument is container');
@@ -57,14 +57,14 @@ test('when already dragging, pointerdown/pointermove ends (cancels) previous dra
   t.plan(7);
   t.equal(drake.dragging, true, 'final state is drake is dragging');
   t.end();
-  function end (item) {
+  function end(item) {
     t.equal(item, item1, 'dragend invoked with correct item');
   }
-  function cancel (item, source) {
+  function cancel(item, source) {
     t.equal(item, item1, 'cancel invoked with correct item');
     t.equal(source, div, 'cancel invoked with correct source');
   }
-  function drag (item, container) {
+  function drag(item, container) {
     t.pass('drag event was emitted synchronously');
     t.equal(item, item2, 'first argument is selected item');
     t.equal(container, div, 'second argument is container');
@@ -91,15 +91,15 @@ test('when already dragged, ends (drops) previous drag', function (t) {
   t.plan(8);
   t.equal(drake.dragging, true, 'final state is drake is dragging');
   t.end();
-  function end (item) {
+  function end(item) {
     t.equal(item, item1, 'dragend invoked with correct item');
   }
-  function drop (item, target, source) {
+  function drop(item, target, source) {
     t.equal(item, item1, 'drop invoked with correct item');
     t.equal(source, div, 'drop invoked with correct source');
     t.equal(target, div2, 'drop invoked with correct target');
   }
-  function drag (item, container) {
+  function drag(item, container) {
     t.pass('drag event was emitted synchronously');
     t.equal(item, item2, 'first argument is selected item');
     t.equal(container, div, 'second argument is container');
@@ -123,13 +123,13 @@ test('when copying, emits cloned with the copy', function (t) {
   t.plan(12);
   t.equal(drake.dragging, true, 'final state is drake is dragging');
   t.end();
-  function cloned (copy, item) {
+  function cloned(copy, item) {
     t.notEqual(copy, item2, 'first argument is not exactly the target');
     t.equal(copy.tagName, item2.tagName, 'first argument has same tag as target');
     t.equal(copy.innerHTML, item2.innerHTML, 'first argument has same inner html as target');
     t.equal(item, item2, 'second argument is clicked item');
   }
-  function drag (item, container) {
+  function drag(item, container) {
     t.pass('drag event was emitted synchronously');
     t.equal(item, item2, 'first argument is selected item');
     t.equal(container, div, 'second argument is container');
@@ -172,10 +172,10 @@ test('when dragging, element gets a mirror image for show', function (t) {
   events.raise(item, 'pointermove', { which: 1 });
   t.plan(4);
   t.end();
-  function cloned (mirror, target) {
+  function cloned(mirror, target) {
     t.equal(item.className, 'gu-transit', 'item does not have gu-mirror class');
     t.equal(mirror.className, 'gu-mirror', 'mirror only has gu-mirror class');
-    t.equal(mirror.innerHTML, item.innerHTML, 'mirror is passed to \'cloned\' event');
+    t.equal(mirror.innerHTML, item.innerHTML, "mirror is passed to 'cloned' event");
     t.equal(target, item, 'cloned lets you know that the mirror is a clone of `item`');
   }
 });
@@ -185,7 +185,7 @@ test('when dragging, mirror element gets appended to configured mirrorContainer'
   var div = document.createElement('div');
   var item = document.createElement('div');
   var drake = dragula([div], {
-    'mirrorContainer': mirrorContainer
+    mirrorContainer: mirrorContainer,
   });
   item.innerHTML = '<em>the force is <strong>with this one</strong></em>';
   div.appendChild(item);
@@ -195,7 +195,7 @@ test('when dragging, mirror element gets appended to configured mirrorContainer'
   events.raise(item, 'pointermove', { which: 1 });
   t.plan(1);
   t.end();
-  function cloned (mirror) {
+  function cloned(mirror) {
     t.equal(mirror.parentNode, mirrorContainer, 'mirrors parent is the configured mirrorContainer');
   }
 });
@@ -234,7 +234,7 @@ test('when drag begins, check for copy option', function (t) {
   item.className = 'copyable';
   div.className = 'contains';
   var drake = dragula([div], {
-    copy: checkCondition
+    copy: checkCondition,
   });
   item.innerHTML = '<em>the force is <strong>with this one</strong></em>';
   div.appendChild(item);
@@ -244,7 +244,7 @@ test('when drag begins, check for copy option', function (t) {
   events.raise(item, 'pointermove', { which: 1 }); // ensure the copy method condition is only asserted once
   t.plan(2);
   t.end();
-  function checkCondition (el, source) {
+  function checkCondition(el, source) {
     t.equal(el.className, 'copyable', 'dragged element classname is copyable');
     t.equal(source.className, 'contains', 'source container classname is contains');
     return true;
@@ -252,5 +252,9 @@ test('when drag begins, check for copy option', function (t) {
   drake.end();
 });
 
-function always () { return true; }
-function never () { return false; }
+function always() {
+  return true;
+}
+function never() {
+  return false;
+}

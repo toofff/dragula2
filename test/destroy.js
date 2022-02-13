@@ -4,14 +4,14 @@ var test = require('tape');
 var dragula = require('../src/dragula');
 
 test('destroy does not throw when not dragging, destroyed, or whatever', function (t) {
-  t.test('a single time', function once (st) {
+  t.test('a single time', function once(st) {
     var drake = dragula();
     st.doesNotThrow(function () {
       drake.destroy();
     }, 'dragula bites into a single call to drake.destroy');
     st.end();
   });
-  t.test('multiple times', function once (st) {
+  t.test('multiple times', function once(st) {
     var drake = dragula();
     st.doesNotThrow(function () {
       drake.destroy();
@@ -48,7 +48,7 @@ test('when dragging and destroy gets called, dragend event is emitted gracefully
   drake.destroy();
   t.plan(1);
   t.end();
-  function dragend () {
+  function dragend() {
     t.pass('dragend got called');
   }
 });
@@ -68,10 +68,10 @@ test('when dragging a copy and destroy gets called, default does not revert', fu
   drake.destroy();
   t.plan(4);
   t.end();
-  function dragend () {
+  function dragend() {
     t.pass('dragend got called');
   }
-  function drop (target, parent, source) {
+  function drop(target, parent, source) {
     t.equal(target, item, 'drop was invoked with item');
     t.equal(parent, div2, 'drop was invoked with final container');
     t.equal(source, div, 'drop was invoked with source container');
@@ -93,10 +93,10 @@ test('when dragging a copy and destroy gets called, revert is executed', functio
   drake.destroy();
   t.plan(3);
   t.end();
-  function dragend () {
+  function dragend() {
     t.pass('dragend got called');
   }
-  function cancel (target, container) {
+  function cancel(target, container) {
     t.equal(target, item, 'cancel was invoked with item');
     t.equal(container, div, 'cancel was invoked with container');
   }
