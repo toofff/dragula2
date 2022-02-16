@@ -1,4 +1,4 @@
 {
-  "src/*.js": ["pnpm lint:eslint -- --fix"],
-  "**/*.{css,html,json,md,yaml,yml}": ["pnpm lint:prettier -- --write"]
+  "src/*.js": ["pnpm run lint:eslint -- --fix"],
+  "**/*.{css,html,json,md,yaml,yml}": ["pnpm run lint:prettier -- --write"]
 }

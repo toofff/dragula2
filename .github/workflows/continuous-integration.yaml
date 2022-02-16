@@ -1,8 +1,11 @@
 name: Continuous Integration
 
 on:
-    pull_request:
     push:
+        branches: [master]
+    pull_request:
+        # The branches below must be a subset of the branches above
+        branches: [master]
 
 jobs:
     commitlint:
@@ -49,12 +52,12 @@ jobs:
               if: matrix.os == 'ubuntu-latest'
               run: sudo apt-get install xvfb
             - name: 'Launch build'
-              run: pnpm build
+              run: pnpm run build
             - name: 'Launch linter'
               run: pnpm run lint
             - name: '[For UbuntuOS] Launch test'
               if: matrix.os == 'ubuntu-latest'
-              run: xvfb-run --auto-servernum pnpm test
+              run: xvfb-run --auto-servernum pnpm run test
             - name: '[For MacOS] Launch test'
               if: matrix.os == 'macos-latest'
-              run: pnpm test
+              run: pnpm run test

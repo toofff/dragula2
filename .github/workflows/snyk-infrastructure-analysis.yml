@@ -1,0 +1,36 @@
+name: Snyk Infrastructure as Code
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+        # The branches below must be a subset of the branches above
+        branches: [master]
+
+jobs:
+    snyk:
+        runs-on: ubuntu-latest
+        environment: 'Continous Integration'
+        steps:
+            - name: 'Checkout'
+              uses: actions/checkout@v2
+            - name: 'Setup PNPM'
+              uses: pnpm/action-setup@646cdf48217256a3d0b80361c5a50727664284f2
+              with:
+                  version: 6.10.0
+            - name: 'Install project'
+              run: pnpm install
+            - name: 'Launch build'
+              run: pnpm run build
+            - name: 'Run Snyk to check for vulnerabilities'
+              uses: snyk/actions/node@master
+              continue-on-error: true
+              env:
+                  SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+              with:
+                  args: --severity-threshold=high --sarif-file-output=snyk.sarif
+            - name: Upload result to GitHub Code Scanning
+              uses: github/codeql-action/upload-sarif@v1
+              with:
+                  category: snyk-tool
+                  sarif_file: snyk.sarif
