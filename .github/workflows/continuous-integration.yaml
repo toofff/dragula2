@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: 'ContinuousIntegration'
 
 on:
     push:
@@ -13,11 +13,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: 'Checkout'
-              uses: actions/checkout@v2
+              uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
               with:
                   fetch-depth: 0
             - name: 'Launch commitlint'
-              uses: wagoid/commitlint-github-action@v4
+              uses: wagoid/commitlint-github-action@481aff4de4d0de6d28d05533d4230d298ea3377d # v5.3.0
               with:
                   configFile: '.commitlintrc.json'
     tests:
@@ -36,14 +36,14 @@ jobs:
         runs-on: ${{ matrix.os }}
         steps:
             - name: 'Checkout'
-              uses: actions/checkout@v2
+              uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
             - name: 'Setup node'
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
               with:
                   node-version: ${{ matrix.node_version }}
                   architecture: ${{ matrix.architecture }}
             - name: 'Setup PNPM'
-              uses: pnpm/action-setup@646cdf48217256a3d0b80361c5a50727664284f2
+              uses: pnpm/action-setup@c3b53f6a16e57305370b4ae5a540c2077a1d50dd # v2.2.4
               with:
                   version: 6.10.0
             - name: 'Install project'

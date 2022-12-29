@@ -1,6 +1,7 @@
 [![Dragula repository][logo_dragula]][link_repository_dragula]
 
-[![GitHub Actions for Dragula][badge_github_svg]][badge_github_link_ci]
+[![GitHub Actions integration for Dragula][badge_github_workflow_integration_svg]][badge_github_link_workflow_integration]
+[![GitHub Actions deployment for Dragula][badge_github_workflow_deployment_svg]][badge_github_link_workflow_deployment]
 [![Code style: prettier][badge_prettier_svg]][badge_prettier_link]
 
 > Drag and drop so simple it hurts
@@ -374,9 +375,13 @@ See [CONTRIBUTING.md][link_contributing_file] for details.
 
 MIT
 
-[badge_github_link_ci]:
-    https://github.com/toofff/dragula/actions?query=workflow%3AContinuous%20Integration+branch%3Amaster
-[badge_github_svg]: https://github.com/toofff/dragula/workflows/Continuous%20Integration/badge.svg?branch=master
+[badge_github_link_workflow_integration]:
+    https://github.com/toofff/dragula/actions/workflows/continuous-integration.yaml
+[badge_github_link_workflow_deployment]: https://github.com/toofff/dragula/actions/workflows/continuous-deployment.yaml
+[badge_github_workflow_integration_svg]:
+    https://github.com/toofff/dragula/actions/workflows/continuous-integration.yaml/badge.svg?branch=master
+[badge_github_workflow_deployment_svg]:
+    https://github.com/toofff/dragula/actions/workflows/continuous-deployment.yaml/badge.svg?branch=master
 [badge_prettier_link]: https://github.com/prettier/prettier
 [badge_prettier_svg]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [demo_link_angular_bridge]: http://valor-software.com/ng2-dragula/index.html
