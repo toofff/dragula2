@@ -1,0 +1,10 @@
+*.ico
+.*ignore
+.editorconfig
+.idea
+.vscode
+.husky/
+*lock*
+dist/
+resources/
+

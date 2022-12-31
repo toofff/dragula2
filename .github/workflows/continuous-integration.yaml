@@ -1,4 +1,5 @@
-name: 'ContinuousIntegration'
+name: continuous-integration
+run-name: '[CI] ${{ github.event.head_commit.message }}'
 
 on:
     push:
@@ -7,57 +8,87 @@ on:
         # The branches below must be a subset of the branches above
         branches: [master]
 
+concurrency:
+    group: 'continuous-integration-${{ github.ref }}'
+    cancel-in-progress: true
+
 jobs:
-    commitlint:
-        name: 'Commit lint'
+    commit-quality:
+        name: '[CI] Commit quality'
         runs-on: ubuntu-latest
         steps:
-            - name: 'Checkout'
-              uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
-              with:
-                  fetch-depth: 0
-            - name: 'Launch commitlint'
-              uses: wagoid/commitlint-github-action@481aff4de4d0de6d28d05533d4230d298ea3377d # v5.3.0
-              with:
-                  configFile: '.commitlintrc.json'
+            -
+                name: '[GITHUB / OFFICIAL] Checkout'
+                uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+                with:
+                    fetch-depth: 0
+            -
+                name: '[OSS] Launch commitlint'
+                uses: wagoid/commitlint-github-action@481aff4de4d0de6d28d05533d4230d298ea3377d # v5.3.0
+                with:
+                    configFile: '.commitlintrc.json'
+
+    code-quality:
+        name: '[CI] Code quality'
+        runs-on: ubuntu-latest
+        steps:
+            -
+                name: '[GITHUB / OFFICIAL] Checkout'
+                uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+                with:
+                    fetch-depth: 0
+            -
+                name: "[GITHUB / OSS] Lint Code Base"
+                uses: github/super-linter@bb2d833b08b6c288608686672b93a8a4589cdc49 # version 4.9.7
+                env:
+                    DEFAULT_BRANCH: 'master'
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    JAVASCRIPT_DEFAULT_STYLE: 'prettier'
+                    JAVASCRIPT_ES_CONFIG_FILE: '.eslintrc.json'
+                    VALIDATE_ALL_CODEBASE: false
+                    VALIDATE_CSS: true
+                    VALIDATE_EDITORCONFIG: true
+                    VALIDATE_ENV: true
+                    VALIDATE_GITHUB_ACTIONS: true
+                    VALIDATE_GITLEAKS: true
+                    VALIDATE_JAVASCRIPT_ES: true
+                    VALIDATE_JAVASCRIPT_STANDARD: true
+                    VALIDATE_MARKDOWN: true
+
     tests:
+        needs: [commit-quality, code-quality]
         strategy:
             matrix:
-                os:
-                    - ubuntu-latest
-                    - macos-latest
-                node_version:
-                    - 14
-                    - 16
-                    - 17
-                architecture:
-                    - x64
-        name: 'Node ${{ matrix.node_version }} - ${{ matrix.architecture }} on ${{ matrix.os }}'
-        runs-on: ${{ matrix.os }}
+                ARCHITECTURE: [x64]
+                OS: [ubuntu-latest, macos-latest]
+                NODE_VERSION: [14, 16, 18]
+        name: '[CI] Node ${{ matrix.NODE_VERSION }} - ${{ matrix.ARCHITECTURE }} on ${{ matrix.OS }}'
+        runs-on: ${{ matrix.OS }}
         steps:
-            - name: 'Checkout'
-              uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
-            - name: 'Setup node'
-              uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
-              with:
-                  node-version: ${{ matrix.node_version }}
-                  architecture: ${{ matrix.architecture }}
-            - name: 'Setup PNPM'
-              uses: pnpm/action-setup@c3b53f6a16e57305370b4ae5a540c2077a1d50dd # v2.2.4
-              with:
-                  version: 6.10.0
-            - name: 'Install project'
-              run: pnpm install
-            - name: '[For UbuntuOS] Install xvfb'
-              if: matrix.os == 'ubuntu-latest'
-              run: sudo apt-get install xvfb
-            - name: 'Launch build'
-              run: pnpm run build
-            - name: 'Launch linter'
-              run: pnpm run lint
-            - name: '[For UbuntuOS] Launch test'
-              if: matrix.os == 'ubuntu-latest'
-              run: xvfb-run --auto-servernum pnpm run test
-            - name: '[For MacOS] Launch test'
-              if: matrix.os == 'macos-latest'
-              run: pnpm run test
+            -
+                name: '[GITHUB / OFFICIAL] Checkout'
+                uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+            -
+                name: "[INTERNAL] Install project & environment"
+                uses: ./.github/actions/install
+                with:
+                    architecture: ${{ matrix.ARCHITECTURE }}
+                    node-version: ${{ matrix.NODE_VERSION }}
+            -
+                name: '[For UbuntuOS] Install xvfb'
+                if: matrix.OS == 'ubuntu-latest'
+                run: sudo apt-get install xvfb
+            -
+                name: 'Launch build'
+                shell: sh
+                run: pnpm run build
+            -
+                name: '[For UbuntuOS] Launch test'
+                if: matrix.OS == 'ubuntu-latest'
+                shell: sh
+                run: xvfb-run --auto-servernum pnpm run test
+            -
+                name: 'Launch test'
+                if: matrix.OS != 'ubuntu-latest'
+                shell: sh
+                run: pnpm run test
