@@ -2,6 +2,7 @@
   "$schema": "http://json.schemastore.org/prettierrc",
   "arrowParens": "always",
   "bracketSpacing": true,
+  "htmlWhitespaceSensitivity": "css",
   "printWidth": 120,
   "proseWrap": "always",
   "quoteProps": "as-needed",
@@ -34,13 +35,6 @@
       "files": ["*.md", "LICENSE"],
       "options": {
         "parser": "markdown",
-        "tabWidth": 4
-      }
-    },
-    {
-      "files": ["*.yaml", "*.yml"],
-      "options": {
-        "parser": "yaml",
         "tabWidth": 4
       }
     }

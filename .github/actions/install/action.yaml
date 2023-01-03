@@ -1,23 +1,23 @@
 name: install-action
-description: "Specific action to install project and his environment"
+description: 'Specific action to install project and his environment'
 
 inputs:
     architecture:
-        description: "Choice of architecture"
+        description: 'Choice of architecture'
         default: x64
         required: false
     node-version:
-        description: "Version of node"
+        description: 'Version of node'
         default: 17
         required: false
     pnpm-version:
-        description: "Version of pnpm"
+        description: 'Version of pnpm'
         default: 6.10.0
         required: false
 
 # Add cache for pnpm / node / node_module?
 runs:
-    using: "composite"
+    using: 'composite'
     steps:
         -
             name: '[GITHUB / OFFICIAL] Setup node'
