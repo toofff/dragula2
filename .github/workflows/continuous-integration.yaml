@@ -3,10 +3,10 @@ run-name: '[CI] ${{ github.event.head_commit.message }}'
 
 on:
     push:
-        branches: [master]
+        branches: [main]
     pull_request:
         # The branches below must be a subset of the branches above
-        branches: [master]
+        branches: [main]
 
 concurrency:
     group: 'continuous-integration-${{ github.ref }}'
@@ -41,7 +41,7 @@ jobs:
                 name: '[GITHUB / OSS] Lint Code Base'
                 uses: github/super-linter@bb2d833b08b6c288608686672b93a8a4589cdc49 # version 4.9.7
                 env:
-                    DEFAULT_BRANCH: 'master'
+                    DEFAULT_BRANCH: 'main'
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     JAVASCRIPT_DEFAULT_STYLE: 'prettier'
                     JAVASCRIPT_ES_CONFIG_FILE: '.eslintrc.json'

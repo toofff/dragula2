@@ -1,3 +1,5 @@
+# Dragula 2
+
 [![Dragula repository][logo_dragula]][link_repository_dragula]
 
 [![GitHub Actions integration for Dragula][badge_github_workflow_integration_svg]][badge_github_link_workflow_integration]
@@ -11,19 +13,19 @@ ES5)_</sub>
 
 Indicative target browser support:
 
--   Chrome 55+, Edge 12+, Opera 42+
--   Firefox 59+
--   Safari 13+, iOS Safari 13+
+- Chrome 55+, Edge 12+, Opera 42+
+- Firefox 59+
+- Safari 13+, iOS Safari 13+
 
 Framework support includes vanilla JavaScript, Angular, and React.
 
--   Official [AngularJs bridge][link_angularjs_bridge] for `dragula` [_(demo)_][demo_link_angularjs_bridge]
--   Official [Angular bridge][link_angular_bridge] for `dragula` [_(demo)_][demo_link_angular_bridge]
--   Official [React bridge][link_react_bridge] for `dragula` [_(demo)_][demo_link_react_bridge]
+- Official [AngularJs bridge][link_angularjs_bridge] for `dragula` [_(demo)_][demo_link_angularjs_bridge]
+- Official [Angular bridge][link_angular_bridge] for `dragula` [_(demo)_][demo_link_angular_bridge]
+- Official [React bridge][link_react_bridge] for `dragula` [_(demo)_][demo_link_react_bridge]
 
-# Breaking changes compared to the original Dragula
+## Breaking changes compared to the original Dragula
 
-## Emitter -> EventTarget
+### Emitter -> EventTarget
 
 Instead of Emitter, Dragula2 extends [`EventTarget`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget) and
 thus, works with regular `addEventListener` and `removeEventListener` and anything that wraps them. Instead of
@@ -31,28 +33,28 @@ positional arguments, named event parameters are passed on the event object via 
 smoothe the transition, `on()`, `off()` and `emit()` methods are also implemented that wrap `addEventListner()` and
 offer a nearly identical API, so that existing code doesn't break.
 
-# Demo
+## Demo
 
 [![Dragula Demo][picture_dragula]][link_repository_dragula]
 
 Try out the [demo][link_repository_dragula]!
 
-# Inspiration
+## Inspiration
 
 Have you ever wanted a drag and drop library that just works? That doesn't just depend on bloated frameworks? That
 actually understands where to place the elements when they are dropped? That doesn't need you to do a zillion things to
 get it to work? Well, so did I!
 
-# Features
+## Features
 
--   Super easy to set up
--   No bloated dependencies
--   **Figures out sort order** on its own
--   A shadow where the item would be dropped offers **visual feedback**
--   Touch events!
--   Seamlessly handles clicks _without any configuration_
+- Super easy to set up
+- No bloated dependencies
+- **Figures out sort order** on its own
+- A shadow where the item would be dropped offers **visual feedback**
+- Touch events!
+- Seamlessly handles clicks _without any configuration_
 
-# Install
+## Install
 
 You can get it on npm.
 
@@ -69,16 +71,16 @@ Or a CDN.
 If you're not using either package manager, you can use `dragula` by downloading the [files in the `dist`
 folder][link_dist_folder]. We **strongly suggest** using `npm`, though.
 
-##### Including the JavaScript
+### Including the JavaScript
 
 There's a caveat to `dragula`. You shouldn't include it in the `<head>` of your web applications. It's bad practice to
 place scripts in the `<head>`, and as such `dragula` makes no effort to support this use case.
 
 Place `dragula` in the `<body>`, instead.
 
-##### Including the CSS!
+### Including the CSS
 
-There's [a few CSS styles][#css] you need to incorporate in order for `dragula` to work as expected.
+There's [a few CSS styles](#css) you need to incorporate in order for `dragula` to work as expected.
 
 You can add them by including [`dist/dragula.min.css`][link_minified_css_file] in your document. If you're using Stylus,
 you can include the styles using the directive below.
@@ -87,11 +89,11 @@ you can include the styles using the directive below.
 @import 'node_modules/dragula/dragula'
 ```
 
-# Usage
+## Usage
 
 Dragula provides the easiest possible API to make drag and drop a breeze in your applications.
 
-## `dragula(containers?, options?)`
+### `dragula(containers?, options?)`
 
 By default, `dragula` will allow the user to drag an element in any of the `containers` and drop it in any other
 container in the list. If the element is dropped anywhere that's not one of the `containers`, the event will be
@@ -286,29 +288,29 @@ select text in inputs within `dragula` containers with their mouse.
 
 The `dragula` method returns a tiny object with a concise API. We'll refer to the API returned by `dragula` as `drake`.
 
-#### `drake.containers`
+### `drake.containers`
 
 This property contains the collection of containers that was passed to `dragula` when building this `drake` instance.
 You can `push` more containers and `splice` old containers at will.
 
-#### `drake.dragging`
+### `drake.dragging`
 
 This property will be `true` whenever an element is being dragged.
 
-#### `drake.start(item)`
+### `drake.start(item)`
 
 Enter drag mode **without a shadow**. This method is most useful when providing complementary keyboard shortcuts to an
 existing drag and drop solution. Even though a shadow won't be created at first, the user will get one as soon as they
 click on `item` and start dragging it around. Note that if they click and drag something else, `.end` will be called
 before picking up the new item.
 
-#### `drake.end()`
+### `drake.end()`
 
 Gracefully end the drag event as if using **the last position marked by the preview shadow** as the drop target. The
 proper `cancel` or `drop` event will be fired, depending on whether the item was dropped back where it was originally
 lifted from _(which is essentially a no-op that's treated as a `cancel` event)_.
 
-#### `drake.cancel(revert)`
+### `drake.cancel(revert)`
 
 If an element managed by `drake` is currently being dragged, this method will gracefully cancel the drag action. You can
 also pass in `revert` at the method invocation level, effectively producing the same result as if `revertOnSpill` was
@@ -316,15 +318,15 @@ also pass in `revert` at the method invocation level, effectively producing the 
 
 Note that **a _"cancellation"_ will result in a `cancel` event** only in the following scenarios.
 
--   `revertOnSpill` is `true`
--   Drop target _(as previewed by the feedback shadow)_ is the source container **and** the item is dropped in the same
+- `revertOnSpill` is `true`
+- Drop target _(as previewed by the feedback shadow)_ is the source container **and** the item is dropped in the same
     position where it was originally dragged from
 
-#### `drake.remove()`
+### `drake.remove()`
 
 If an element managed by `drake` is currently being dragged, this method will gracefully remove it from the DOM.
 
-#### `drake.on` _(Events)_
+### `drake.on` _(Events)_
 
 The `drake` is an event emitter. The following events can be tracked using `drake.on(type, listener)`:
 
@@ -340,16 +342,16 @@ The `drake` is an event emitter. The following events can be tracked using `drak
 | `out`      | `el, container, source`       | `el` was dragged out of `container` or dropped, and originally came from `source`                                                                                                       |
 | `cloned`   | `clone, original, type`       | DOM element `original` was cloned as `clone`, of `type` _(`'mirror'` or `'copy'`)_. Fired for mirror images and when `copy: true`                                                       |
 
-#### `drake.canMove(item)`
+### `drake.canMove(item)`
 
 Returns whether the `drake` instance can accept drags for a DOM element `item`. This method returns `true` when all the
 conditions outlined below are met, and `false` otherwise.
 
--   `item` is a child of one of the specified containers for `drake`
--   `item` passes the pertinent [`invalid`](#optionsinvalid) checks
--   `item` passes a `moves` check
+- `item` is a child of one of the specified containers for `drake`
+- `item` passes the pertinent [`invalid`](#optionsinvalid) checks
+- `item` passes a `moves` check
 
-#### `drake.destroy()`
+### `drake.destroy()`
 
 Removes all drag and drop events used by `dragula` to manage drag and drop between the `containers`. If `.destroy` is
 called while an element is being dragged, the drag will be effectively cancelled.
@@ -359,29 +361,29 @@ called while an element is being dragged, the drag will be effectively cancelled
 Dragula uses only four CSS classes. Their purpose is quickly explained below, but you can check
 [`dist/dragula.min.css`][link_minified_css_file] to see the corresponding CSS rules.
 
--   `gu-unselectable` is added to the `mirrorContainer` element when dragging. You can use it to style the
+- `gu-unselectable` is added to the `mirrorContainer` element when dragging. You can use it to style the
     `mirrorContainer` while something is being dragged.
--   `gu-transit` is added to the source element when its mirror image is dragged. It just adds opacity to it.
--   `gu-mirror` is added to the mirror image. It handles fixed positioning and `z-index` _(and removes any prior margins
+- `gu-transit` is added to the source element when its mirror image is dragged. It just adds opacity to it.
+- `gu-mirror` is added to the mirror image. It handles fixed positioning and `z-index` _(and removes any prior margins
     on the element)_. Note that the mirror image is appended to the `mirrorContainer`, not to its initial container.
     Keep that in mind when styling your elements with nested rules, like `.list .item { padding: 10px; }`.
--   `gu-hide` is a helper class to apply `display: none` to an element.
+- `gu-hide` is a helper class to apply `display: none` to an element.
 
-# Contributing
+## Contributing
 
 See [CONTRIBUTING.md][link_contributing_file] for details.
 
-# License
+## License
 
 MIT
 
 [badge_github_link_workflow_integration]:
-    https://github.com/toofff/dragula/actions/workflows/continuous-integration.yaml
-[badge_github_link_workflow_deployment]: https://github.com/toofff/dragula/actions/workflows/continuous-deployment.yaml
+    https://github.com/toofff/dragula2/actions/workflows/continuous-integration.yaml
+[badge_github_link_workflow_deployment]: https://github.com/toofff/dragula2/actions/workflows/continuous-deployment.yaml
 [badge_github_workflow_integration_svg]:
-    https://github.com/toofff/dragula/actions/workflows/continuous-integration.yaml/badge.svg?branch=master
+    https://github.com/toofff/dragula2/actions/workflows/continuous-integration.yaml/badge.svg?branch=main
 [badge_github_workflow_deployment_svg]:
-    https://github.com/toofff/dragula/actions/workflows/continuous-deployment.yaml/badge.svg?branch=master
+    https://github.com/toofff/dragula2/actions/workflows/continuous-deployment.yaml/badge.svg?branch=main
 [badge_prettier_link]: https://github.com/prettier/prettier
 [badge_prettier_svg]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [demo_link_angular_bridge]: http://valor-software.com/ng2-dragula/index.html
@@ -390,7 +392,7 @@ MIT
 [picture_dragula]: https://github.com/bevacqua/dragula/blob/master/resources/demo.png
 [link_angular_bridge]: https://github.com/valor-software/ng2-dragula
 [link_angularjs_bridge]: https://github.com/bevacqua/angularjs-dragula
-[link_contributing_file]: https://github.com/toofff/dragula/blob/master/.github/CONTRIBUTING.md
+[link_contributing_file]: https://github.com/toofff/dragula2/blob/main/.github/CONTRIBUTING.md
 [link_dist_folder]: https://github.com/bevacqua/dragula/blob/master/dist
 [link_minified_css_file]: https://github.com/bevacqua/dragula/blob/master/dist/dragula.min.css
 [link_react_bridge]: https://github.com/bevacqua/react-dragula

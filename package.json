@@ -1,14 +1,14 @@
 {
-  "name": "dragula",
-  "version": "3.7.3",
-  "author": "Nicolas Bevacqua <nicolasbevacqua@gmail.com>",
-  "description": "Drag and drop so simple it hurts",
-  "homepage": "https://github.com/bevacqua/dragula",
+  "name": "dragula2",
+  "version": "0.0.0",
+  "author": "Prou Yann <toofff.development@gmail.com>",
+  "description": "Drag and drop so simple it hurts - Second edition",
+  "homepage": "https://github.com/toofff/dragula2",
   "license": "MIT",
   "main": "src/dragula.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bevacqua/dragula.git"
+    "url": "https://github.com/toofff/dragula2.git"
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",

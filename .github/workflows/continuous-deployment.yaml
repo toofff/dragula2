@@ -3,7 +3,7 @@ run-name: '[CD] Deployment of the website by @${{ github.actor }}'
 
 on:
     workflow_run:
-        branches: [master]
+        branches: [main]
         types: [completed]
         workflows: [continuous-integration]
 
