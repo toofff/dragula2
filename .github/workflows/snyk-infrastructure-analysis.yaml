@@ -1,4 +1,4 @@
-name: Snyk Infrastructure as Code
+name: snyk-infrastructure-analysis
 run-name: '[SNYK] ${{ github.event.head_commit.message }}'
 
 on:
@@ -8,24 +8,27 @@ on:
         # The branches below must be a subset of the branches above
         branches: [master]
 
+concurrency:
+    group: 'snyk-infrastructure-analysis-${{ github.ref }}'
+    cancel-in-progress: true
+
 jobs:
     snyk:
         runs-on: ubuntu-latest
         environment: 'Continous Integration'
         steps:
             -
-                name: 'Checkout'
-                uses: actions/checkout@v2
+                name: '[GITHUB / OFFICIAL] Checkout'
+                uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
             -
-                name: 'Setup PNPM'
-                uses: pnpm/action-setup@646cdf48217256a3d0b80361c5a50727664284f2
+                name: '[INTERNAL] Install project & environment'
+                uses: ./.github/actions/install
                 with:
-                    version: 6.10.0
-            -
-                name: 'Install project'
-                run: pnpm install
+                    architecture: x64
+                    node-version: 18
             -
                 name: 'Launch build'
+                shell: sh
                 run: pnpm run build
             -
                 name: 'Run Snyk to check for vulnerabilities'
