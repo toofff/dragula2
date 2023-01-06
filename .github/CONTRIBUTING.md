@@ -2,13 +2,17 @@
 
 Hey there! Glad you want to chime in. Here's what you need to know.
 
-## Support Requests
+## Issues report
 
-If you have a question, make sure it wasn't [already answered][link_issue_question_label].
+If you need to open an issue, please [choose the type of issue][link_issue_create] to open.
 
-> Our goal is to provide answers to the most frequently asked questions somewhere in the documentation.
+We have 4 types of issues to use:
+- [bug report][link_issue_create_bug]
+- [feature request][link_issue_create_feature_request]
+- [support question][link_issue_create_support_question]
+- [documentation][link_issue_create_documentation]
 
-## Reporting Bugs
+### Reporting Bugs
 
 Bug reports are tricky. However, before submitting it, please:
 
@@ -25,12 +29,18 @@ Then, if it appears that it's a real bug, you may report it using GitHub by foll
 Thanks for reporting bugs, we'd be lost without you and if you want to start working on a fix, we'll be forever
 grateful!
 
-## Feature Requests
+### Feature Requests
 
 We're still considering feature requests. Note that we might not implement the feature you want, or exactly how you want
 it. The goal here is to keep making `dragula2` awesome while not making it too bloated.
 
 We also dislike overly specific features and favor more abstract ones you the consumer can build other features upon.
+
+### Support Requests
+
+If you have a question, make sure it wasn't [already answered][link_issue_question_label].
+
+> Our goal is to provide answers to the most frequently asked questions somewhere in the documentation.
 
 ## Development
 
@@ -121,4 +131,9 @@ The following types are allowed:
 [link_eslint_project]: https://eslint.org/
 [link_prettier_project]: https://prettier.io/
 [link_issue]: https://github.com/toofff/dragula2/issues
+[link_issue_create]: https://github.com/toofff/dragula2/issues/new/choose
+[link_issue_create_bug]: https://github.com/toofff/dragula2/issues/new?assignees=&labels=bug%2CStatus%3A+Needs+review&template=01_bug_report.yaml
+[link_issue_create_feature_request]: https://github.com/toofff/dragula2/issues/new?assignees=&labels=enhancement%2CStatus%3A+Needs+review&template=02_feature_request.yaml
+[link_issue_create_support_question]: https://github.com/toofff/dragula2/issues/new?assignees=&labels=question%2CStatus%3A+Needs+review&template=03_support_question.yaml
+[link_issue_create_documentation]: https://github.com/toofff/dragula2/issues/new?assignees=&labels=documentation%2CStatus%3A+Needs+review&template=04_documentation.yaml
 [link_issue_question_label]: https://github.com/toofff/dragula2/issues?q=label%3Aquestion

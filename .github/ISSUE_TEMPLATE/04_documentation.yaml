@@ -1,0 +1,19 @@
+name:  📖 Documentation
+description: An understanding problem on our documentation website, https://toofff.github.io/dragula2
+labels: ['documentation', 'Status: Needs review']
+
+body:
+    - type: textarea
+      id: description
+      attributes:
+          label: 'Description'
+          description: 'A clear and concise description of the problem you are having with the documentation'
+      validations:
+          required: true
+    - type: textarea
+      id: possible-solution
+      attributes:
+          label: 'Possible Solution'
+          description: |
+              Optional: only if you have suggestions on a fix/reason for the bug
+              Don't hesitate to create a pull request with your solution, it helps get faster feedback.

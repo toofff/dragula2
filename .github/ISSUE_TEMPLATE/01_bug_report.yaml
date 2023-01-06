@@ -1,0 +1,58 @@
+name: 🐛 Bug Report
+description: ⚠️ NEVER report security issues, read https://github.com/toofff/dragula2/security/policy instead
+labels: ['bug', 'Status: Needs review']
+
+body:
+    - type: input
+      id: affected-versions
+      attributes:
+          label: 'Dragula2 version(s) affected'
+          placeholder: 'x.y.z'
+      validations:
+          required: true
+    - type: textarea
+      id: description
+      attributes:
+          label: 'Description'
+          description: 'A clear and concise description of the problem'
+      validations:
+          required: true
+    - type: textarea
+      id: environment
+      attributes:
+          label: 'Environment used'
+          description: |
+              examples:
+                - **OS**: Ubuntu 20.04
+                - **Node**: 13.14.0
+                - **Package manager**: npm (7.6.3)
+                - **Browser**: chrome (107.0.5304.110)
+          value: |
+              - **OS**:
+              - **Node**:
+              - **Package manager**:
+              - **Browser**:
+      validations:
+          required: false
+    - type: textarea
+      id: how-to-reproduce
+      attributes:
+          label: 'How to reproduce'
+          description: |
+              ⚠️  This is the most important part of the report ⚠️
+              Without a way to easily reproduce your issue, there is little chance we will be able to help you and work on a fix.
+              Please, take the time to show us some code and/or config that is needed for others to reproduce the problem easily.
+      validations:
+          required: true
+    - type: textarea
+      id: possible-solution
+      attributes:
+          label: 'Possible Solution'
+          description: |
+              Optional: only if you have suggestions on a fix/reason for the bug
+              Don't hesitate to create a pull request with your solution, it helps get faster feedback.
+    - type: textarea
+      id: additional-context
+      attributes:
+          label: 'Additional Context'
+          description: 'Optional: any other context about the problem: log messages, screenshots, etc.'

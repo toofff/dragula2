@@ -1,0 +1,17 @@
+name: ❓ Support question
+description: Do not hesitate to consult our documentation website, https://toofff.github.io/dragula2, before opening an issue
+labels: ['question', 'Status: Needs review']
+
+body:
+    - type: textarea
+      id: description
+      attributes:
+          label: 'Description'
+          description: 'A clear and concise description of the question'
+      validations:
+          required: true
+    - type: textarea
+      id: example
+      attributes:
+          label: 'Example'
+          description: 'A simple example to put your question into action'
