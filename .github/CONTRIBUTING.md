@@ -12,14 +12,14 @@ If you have a question, make sure it wasn't [already answered][link_issue_questi
 
 Bug reports are tricky. However, before submitting it, please:
 
--   Check the project [documentation available online][link_documentation_website]
+- Check the project [documentation available online][link_documentation_website]
 
 Then, if it appears that it's a real bug, you may report it using GitHub by following these 3 points:
 
--   Check if [the bug is not already reported][link_issue]!
--   A clear title to resume the issue
--   A description of the workflow needed to reproduce the bug
--   If possible, provide a demo where the bug is isolated and turned into its smallest possible representation. That
+- Check if [the bug is not already reported][link_issue]!
+- A clear title to resume the issue
+- A description of the workflow needed to reproduce the bug
+- If possible, provide a demo where the bug is isolated and turned into its smallest possible representation. That
     would help a lot!
 
 Thanks for reporting bugs, we'd be lost without you and if you want to start working on a fix, we'll be forever
@@ -76,44 +76,44 @@ To make your life easier, a set of tools is implemented during the installation 
 **During your commit process**, the [husky library][link_husky_project] will automatically launch certain commands on 2
 of the git events:
 
--   commit-msg
-    -   launch [commitlint][link_commitlint_project]
--   pre-commit
-    -   launch [eslint][link_eslint_project] on `js` files
-    -   launch [prettier][link_prettier_project] on `css`, `html`, `json` and `md` files
+- commit-msg
+  - launch [commitlint][link_commitlint_project]
+- pre-commit
+  - launch [eslint][link_eslint_project] on `js` files
+  - launch [prettier][link_prettier_project] on `css`, `html`, `json` and `md` files
 
 ### Writing a Pull Request
 
 First of all, you must decide on what branch your changes will be based depending of the nature of the change.
 
--   stable: regular bugfixes are integrated in this version
--   old-stable: security fixes are integrated in this version, regular bugfixes are not backported in it
--   development (main branch): new features target this branch
+- stable: regular bugfixes are integrated in this version
+- old-stable: security fixes are integrated in this version, regular bugfixes are not backported in it
+- development (main branch): new features target this branch
 
 ### Sending a Pull Request
 
 When you send a PR, just make sure that:
 
--   You add valid test cases.
--   Tests are green.
--   You make the PR on the same branch you based your changes on. If you see commits that you did not make in your PR,
+- You add valid test cases.
+- Tests are green.
+- You make the PR on the same branch you based your changes on. If you see commits that you did not make in your PR,
     you're doing it wrong.
--   Also don't forget to add a comment when you update a PR with a ping @toofff.
+- Also don't forget to add a comment when you update a PR with a ping @toofff.
 
 The commit messages must follow the [Conventional Commits specification](https://www.conventionalcommits.org/).
 
 The following types are allowed:
 
--   `build`: everything that corresponds to the project's compilation tools
--   `chore`: updating dependencies and related changes
--   `ci`: CI-related change
--   `docs`: change in the documentation
--   `feat`: new feature
--   `fix`: bug fix
--   `perf`: performance optimization
--   `refactor`: code restructuring
--   `style`: a styling update
--   `test`: test-related change
+- `build`: everything that corresponds to the project's compilation tools
+- `chore`: updating dependencies and related changes
+- `ci`: CI-related change
+- `docs`: change in the documentation
+- `feat`: new feature
+- `fix`: bug fix
+- `perf`: performance optimization
+- `refactor`: code restructuring
+- `style`: a styling update
+- `test`: test-related change
 
 [link_documentation_website]: https://toofff.github.io/dragula2
 [link_commitlint_project]: https://commitlint.js.org/#/
