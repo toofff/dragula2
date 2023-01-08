@@ -64,17 +64,44 @@ pnpm start
 
 ### Test
 
-Run the command below to execute all tests in a DevTools window through Electron. Note that the DevTools will get
-reloaded whenever your test files change, making tests a breeze!
+Now we have 2 different technologies in place for testing, **Jest** & **Tape**.
+This will be the case while waiting to stabilize the second edition of Dragula.
+
+In the near future, we want to keep only one technology and it will be **Jest**, because the technology is better
+maintained and with a larger community.
+
+#### Jest - The new format
+
+To run tests a single time, simply run the following command.
 
 ```shell
-pnpm test-watch
+pnpm test
 ```
+
+Run the command below to execute all tests with a reload whenever your test files change, making tests a breeze!
+
+```shell
+pnpm test:watch
+```
+
+This is used in CI testing.
+
+```shell
+pnpm test:ci
+```
+
+#### Tape - The historical format
 
 To run tests a single time, simply run the following command. This is used in CI testing.
 
 ```shell
-pnpm test
+pnpm test:old
+```
+
+Run the command below to execute all tests with a reload whenever your test files change, making tests a breeze!
+
+```shell
+pnpm test:old:watch
 ```
 
 ## Pull Requests

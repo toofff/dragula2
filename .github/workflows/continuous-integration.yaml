@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
     commit-quality:
-        name: '[CI] Commit quality'
+        name: '[LINT] Commit quality'
         runs-on: ubuntu-latest
         steps:
             -
@@ -29,7 +29,7 @@ jobs:
                     configFile: '.commitlintrc.json'
 
     code-quality:
-        name: '[CI] Code quality'
+        name: '[LINT] Code quality'
         runs-on: ubuntu-latest
         steps:
             -
@@ -54,14 +54,14 @@ jobs:
                     VALIDATE_JAVASCRIPT_STANDARD: true
                     VALIDATE_MARKDOWN: true
 
-    tests:
+    tests-with-tape:
         needs: [commit-quality, code-quality]
         strategy:
             matrix:
                 ARCHITECTURE: [x64]
                 OS: [ubuntu-latest, macos-latest]
                 NODE_VERSION: [14, 16, 18]
-        name: '[CI] Node ${{ matrix.NODE_VERSION }} - ${{ matrix.ARCHITECTURE }} on ${{ matrix.OS }}'
+        name: '[TEST] Tape - Node ${{ matrix.NODE_VERSION }} - ${{ matrix.ARCHITECTURE }} on ${{ matrix.OS }}'
         runs-on: ${{ matrix.OS }}
         steps:
             -
@@ -85,9 +85,37 @@ jobs:
                 name: '[For UbuntuOS] Launch test'
                 if: matrix.OS == 'ubuntu-latest'
                 shell: sh
-                run: xvfb-run --auto-servernum pnpm run test
+                run: xvfb-run --auto-servernum pnpm run test:old
             -
                 name: 'Launch test'
                 if: matrix.OS != 'ubuntu-latest'
                 shell: sh
-                run: pnpm run test
+                run: pnpm run test:old
+
+    tests-with-jest:
+        needs: [commit-quality, code-quality]
+        strategy:
+            matrix:
+                ARCHITECTURE: [x64]
+                OS: [ubuntu-latest, macos-latest]
+                NODE_VERSION: [14, 16, 18]
+        name: '[TEST] Jest - Node ${{ matrix.NODE_VERSION }} - ${{ matrix.ARCHITECTURE }} on ${{ matrix.OS }}'
+        runs-on: ${{ matrix.OS }}
+        steps:
+            -
+                name: '[GITHUB / OFFICIAL] Checkout'
+                uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+            -
+                name: '[INTERNAL] Install project & environment'
+                uses: ./.github/actions/install
+                with:
+                    architecture: ${{ matrix.ARCHITECTURE }}
+                    node-version: ${{ matrix.NODE_VERSION }}
+            -
+                name: 'Launch build'
+                shell: sh
+                run: pnpm run build
+            -
+                name: 'Launch test'
+                shell: sh
+                run: pnpm run test:ci
