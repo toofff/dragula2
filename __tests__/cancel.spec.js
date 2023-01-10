@@ -3,6 +3,9 @@ const dragula = require("../src/dragula");
 
 describe("cancel", () => {
   describe("cancel does not throw when not dragging", () => {
+    /**
+     * @jest-environment jsdom
+     */
     it("a single time", () => {
       const drake = dragula();
 
@@ -11,6 +14,9 @@ describe("cancel", () => {
       }).not.toThrow();
     });
 
+    /**
+     * @jest-environment jsdom
+     */
     it("multiple times", () => {
       const drake = dragula();
 
@@ -23,6 +29,9 @@ describe("cancel", () => {
     });
   });
 
+  /**
+   * @jest-environment jsdom
+   */
   it("when dragging and cancel gets called, nothing happens", () => {
     const div = document.createElement("div");
     const item = document.createElement("div");
@@ -37,6 +46,9 @@ describe("cancel", () => {
     expect(drake.dragging).toBeFalsy();
   });
 
+  /**
+   * @jest-environment jsdom
+   */
   it("when dragging and cancel gets called, cancel event is emitted", () => {
     const stubCancel = jest.fn();
     const stubDragEnd = jest.fn();
@@ -60,6 +72,9 @@ describe("cancel", () => {
     expect(stubDragEnd.mock.calls[0][0]).toEqual(item);
   });
 
+  /**
+   * @jest-environment jsdom
+   */
   it("when dragging a copy and cancel gets called, default does not revert", () => {
     const stubDrop = jest.fn();
     const stubDragEnd = jest.fn();
@@ -87,6 +102,9 @@ describe("cancel", () => {
     expect(stubDragEnd.mock.calls[0][0]).toEqual(item);
   });
 
+  /**
+   * @jest-environment jsdom
+   */
   it("when dragging a copy and cancel gets called, revert is executed", () => {
     const stubCancel = jest.fn();
     const stubDragEnd = jest.fn();

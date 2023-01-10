@@ -2,6 +2,9 @@
 const dragula = require("../src/dragula");
 
 describe("default", () => {
+  /**
+   * @jest-environment jsdom
+   */
   it("drake has sensible default options", () => {
     const options = dragula({}).options;
 

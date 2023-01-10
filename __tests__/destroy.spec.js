@@ -2,6 +2,9 @@
 const dragula = require("../src/dragula");
 
 describe("destroy", () => {
+  /**
+   * @jest-environment jsdom
+   */
   describe("destroy does not throw when not dragging, destroyed, or whatever", () => {
     it("a single time", () => {
       const drake = dragula();
@@ -23,7 +26,10 @@ describe("destroy", () => {
     });
   });
 
-  it.skip("when dragging and destroy gets called, nothing happens", () => {
+  /**
+   * @jest-environment puppeteer
+   */
+  it("when dragging and destroy gets called, nothing happens", () => {
     const div = document.createElement("div");
     const item = document.createElement("div");
 

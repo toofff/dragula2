@@ -2,6 +2,9 @@
 const dragula = require("../src/dragula");
 
 describe("container", () => {
+  /**
+   * @jest-environment jsdom
+   */
   it("drake defaults to no containers", () => {
     const drake = dragula();
 
@@ -9,6 +12,9 @@ describe("container", () => {
     expect(drake.containers.length).toEqual(0);
   });
 
+  /**
+   * @jest-environment jsdom
+   */
   it("drake reads containers from array argument", () => {
     const el = document.createElement("div");
     const containers = [el];
@@ -18,6 +24,9 @@ describe("container", () => {
     expect(drake.containers.length).toEqual(1);
   });
 
+  /**
+   * @jest-environment jsdom
+   */
   it("drake reads containers from array in options", () => {
     const el = document.createElement("div");
     const containers = [el];
@@ -27,6 +36,9 @@ describe("container", () => {
     expect(drake.containers.length).toEqual(1);
   });
 
+  /**
+   * @jest-environment jsdom
+   */
   it("containers in options take precedent", () => {
     const el = document.createElement("div");
     const containers = [el];
