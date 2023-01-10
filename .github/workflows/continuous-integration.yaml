@@ -1,5 +1,5 @@
 name: continuous-integration
-run-name: '[CI] ${{ github.event.head_commit.message }}'
+run-name: '[CI] ${{ github.event.head_commit.message }}${{ github.event.pull_request.title }} by @${{ github.actor }}'
 
 on:
     push:
