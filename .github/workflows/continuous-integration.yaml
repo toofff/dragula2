@@ -28,6 +28,67 @@ jobs:
                 with:
                     configFile: '.commitlintrc.json'
 
+    github-action-quality:
+        name: '[LINT] Github action quality'
+        runs-on: ubuntu-latest
+        steps:
+            -
+                name: '[GITHUB / OFFICIAL] Checkout'
+                uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+                with:
+                    fetch-depth: 0
+            -
+                name: '[OSS / REVIEW DOG] Launch actionlint'
+                uses: reviewdog/action-actionlint@326cc761d95c903f29a111a44888be707f912684 # v1.35.0
+                with:
+                    fail_on_error: true
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+                    level: 'error'
+                    reporter: 'github-check'
+
+    javascript-quality:
+        name: '[LINT] Javascript quality'
+        runs-on: ubuntu-latest
+        steps:
+            -
+                name: '[GITHUB / OFFICIAL] Checkout'
+                uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+                with:
+                    fetch-depth: 0
+            -
+                name: '[INTERNAL] Install project & environment'
+                uses: ./.github/actions/install
+                with:
+                    architecture: x64
+                    node_version: 18
+            -
+                name: '[OSS / REVIEW DOG] Launch eslint'
+                uses: reviewdog/action-eslint@d3395027ea2cfc5cf8f460b1ea939b6c86fea656 # v1.17.0
+                with:
+                    eslint_flags: './src --color --config .eslintrc.json --ext .js'
+                    fail_on_error: true
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+                    level: 'error'
+                    reporter: 'github-check'
+
+    markdown-quality:
+        name: '[LINT] Mardown quality'
+        runs-on: ubuntu-latest
+        steps:
+            -
+                name: '[GITHUB / OFFICIAL] Checkout'
+                uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+                with:
+                    fetch-depth: 0
+            -
+                name: '[OSS / REVIEW DOG] Launch markdownlint'
+                uses: reviewdog/action-markdownlint@97e3df02fe1573d505a7b268046a44fa5409cbc3 # v0.9.0
+                with:
+                    fail_on_error: true
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+                    level: 'error'
+                    reporter: 'github-check'
+
     code-quality:
         name: '[LINT] Code quality'
         runs-on: ubuntu-latest
@@ -43,19 +104,41 @@ jobs:
                 env:
                     DEFAULT_BRANCH: 'main'
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                    JAVASCRIPT_DEFAULT_STYLE: 'prettier'
-                    JAVASCRIPT_ES_CONFIG_FILE: '.eslintrc.json'
                     VALIDATE_ALL_CODEBASE: false
                     VALIDATE_CSS: true
                     VALIDATE_ENV: true
-                    VALIDATE_GITHUB_ACTIONS: true
                     VALIDATE_GITLEAKS: true
-                    VALIDATE_JAVASCRIPT_ES: true
-                    VALIDATE_JAVASCRIPT_STANDARD: true
-                    VALIDATE_MARKDOWN: true
+
+    tests-with-jest:
+        needs: [commit-quality, github-action-quality, javascript-quality, markdown-quality, code-quality]
+        strategy:
+            matrix:
+                ARCHITECTURE: [x64]
+                OS: [ubuntu-latest, macos-latest]
+                NODE_VERSION: [14, 16, 18]
+        name: '[TEST] Jest - Node ${{ matrix.NODE_VERSION }} - ${{ matrix.ARCHITECTURE }} on ${{ matrix.OS }}'
+        runs-on: ${{ matrix.OS }}
+        steps:
+            -
+                name: '[GITHUB / OFFICIAL] Checkout'
+                uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+            -
+                name: '[INTERNAL] Install project & environment'
+                uses: ./.github/actions/install
+                with:
+                    architecture: ${{ matrix.ARCHITECTURE }}
+                    node_version: ${{ matrix.NODE_VERSION }}
+            -
+                name: 'Launch build'
+                shell: sh
+                run: pnpm run build
+            -
+                name: 'Launch test'
+                shell: sh
+                run: pnpm run test:ci
 
     tests-with-tape:
-        needs: [commit-quality, code-quality]
+        needs: [commit-quality, github-action-quality, javascript-quality, markdown-quality, code-quality]
         strategy:
             matrix:
                 ARCHITECTURE: [x64]
@@ -72,7 +155,7 @@ jobs:
                 uses: ./.github/actions/install
                 with:
                     architecture: ${{ matrix.ARCHITECTURE }}
-                    node-version: ${{ matrix.NODE_VERSION }}
+                    node_version: ${{ matrix.NODE_VERSION }}
             -
                 name: '[For UbuntuOS] Install xvfb'
                 if: matrix.OS == 'ubuntu-latest'
@@ -92,30 +175,19 @@ jobs:
                 shell: sh
                 run: pnpm run test:old
 
-    tests-with-jest:
-        needs: [commit-quality, code-quality]
-        strategy:
-            matrix:
-                ARCHITECTURE: [x64]
-                OS: [ubuntu-latest, macos-latest]
-                NODE_VERSION: [14, 16, 18]
-        name: '[TEST] Jest - Node ${{ matrix.NODE_VERSION }} - ${{ matrix.ARCHITECTURE }} on ${{ matrix.OS }}'
-        runs-on: ${{ matrix.OS }}
+    tests-end:
+        needs: [tests-with-jest, tests-with-tape]
+        name: '[TEST] Is it a success?'
+        runs-on: ubuntu-latest
+        if: ${{ always() }}
         steps:
             -
-                name: '[GITHUB / OFFICIAL] Checkout'
-                uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
-            -
-                name: '[INTERNAL] Install project & environment'
-                uses: ./.github/actions/install
-                with:
-                    architecture: ${{ matrix.ARCHITECTURE }}
-                    node-version: ${{ matrix.NODE_VERSION }}
-            -
-                name: 'Launch build'
+                name: 'Tests OK'
+                if: ${{ needs.tests-with-jest.result == 'success' && needs.tests-with-tape.result == 'success' }}
                 shell: sh
-                run: pnpm run build
+                run: exit 0
             -
-                name: 'Launch test'
+                name: 'Tests KO'
+                if: ${{ needs.tests-with-jest.result != 'success' || needs.tests-with-tape.result != 'success' }}
                 shell: sh
-                run: pnpm run test:ci
+                run: exit 1

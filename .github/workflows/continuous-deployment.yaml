@@ -30,7 +30,7 @@ jobs:
                 uses: ./.github/actions/install
                 with:
                     architecture: x64
-                    node-version: 18
+                    node_version: 18
             -
                 name: 'Launch build'
                 shell: sh

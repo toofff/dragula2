@@ -28,8 +28,8 @@
 
 ## Checklist
 
-- [] Always add tests and ensure they pass.
-- [] Features and deprecations must be submitted against the latest branch.
-- [] Features and deprecations must have a change in the documentation.
-- [] For new features, provide some code snippets to help understand usage.
-- [] Never break backward compatibility.
+- [ ] Always add tests and ensure they pass.
+- [ ] Features and deprecations must be submitted against the latest branch.
+- [ ] Features and deprecations must have a change in the documentation.
+- [ ] For new features, provide some code snippets to help understand usage.
+- [ ] Never break backward compatibility.
