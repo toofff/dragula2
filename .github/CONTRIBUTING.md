@@ -139,18 +139,24 @@ When you send a PR, just make sure that:
 
 The commit messages must follow the [Conventional Commits specification](https://www.conventionalcommits.org/).
 
-The following types are allowed:
+The following `scope` are allowed:
+- `core`: Dragula2 source code
+- `website`: presentation and demo website
+- `tools`: the external tools put in place to improve the development experience
+- `github`: management of the github account and its tools
 
-- `build`: everything that corresponds to the project's compilation tools
-- `chore`: updating dependencies and related changes
-- `ci`: CI-related change
-- `docs`: change in the documentation
-- `feat`: new feature
-- `fix`: bug fix
-- `perf`: performance optimization
-- `refactor`: code restructuring
-- `style`: a styling update
-- `test`: test-related change
+The following `types` are allowed:
+- `feat`: a new feature
+- `fix`: a bug fix
+- `docs`: documentation only changes
+- `style`: changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+- `refactor`: a code change that neither fixes a bug nor adds a feature
+- `perf`: a code change that improves performance
+- `test`: adding missing tests or correcting existing tests
+- `build`: changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+- `ci`: changes to our CI configuration files and scripts (example scopes: Github, Circle, BrowserStack, SauceLabs)
+- `chore`: other changes that don't modify src or test files
+- `revert`: reverts a previous commit
 
 [link_documentation_website]: https://toofff.github.io/dragula2
 [link_commitlint_project]: https://commitlint.js.org/#/
