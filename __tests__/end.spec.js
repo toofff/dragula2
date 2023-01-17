@@ -1,9 +1,9 @@
 /* eslint-disable */
-const dragula = require("../src/dragula");
+const dragula = require('../src/dragula');
 
-describe("end", () => {
-  describe("end does not throw when not dragging", () => {
-    it("a single time", () => {
+describe('end', () => {
+  describe('end does not throw when not dragging', () => {
+    it('a single time', () => {
       const drake = dragula();
 
       expect(() => {
@@ -11,7 +11,7 @@ describe("end", () => {
       }).not.toThrow();
     });
 
-    it("multiple times", () => {
+    it('multiple times', () => {
       const drake = dragula();
 
       expect(() => {
@@ -23,21 +23,21 @@ describe("end", () => {
     });
   });
 
-  it("when already dragging, .end() ends (cancels) previous drag", () => {
+  it('when already dragging, .end() ends (cancels) previous drag', () => {
     const stubDragEnd = jest.fn();
     const stubCancel = jest.fn();
 
-    const div = document.createElement("div");
-    const item1 = document.createElement("div");
-    const item2 = document.createElement("div");
+    const div = document.createElement('div');
+    const item1 = document.createElement('div');
+    const item2 = document.createElement('div');
 
     const drake = dragula([div]);
     div.appendChild(item1);
     div.appendChild(item2);
     document.body.appendChild(div);
     drake.start(item1);
-    drake.on("dragend", stubDragEnd);
-    drake.on("cancel", stubCancel);
+    drake.on('dragend', stubDragEnd);
+    drake.on('cancel', stubCancel);
     drake.end();
 
     expect(drake.dragging).toBeFalsy();
@@ -48,14 +48,14 @@ describe("end", () => {
     expect(stubCancel.mock.calls[0][1]).toEqual(div);
   });
 
-  it("when already dragged, ends (drops) previous drag", () => {
+  it('when already dragged, ends (drops) previous drag', () => {
     const stubDragEnd = jest.fn();
     const stubDrop = jest.fn();
 
-    const div = document.createElement("div");
-    const div2 = document.createElement("div");
-    const item1 = document.createElement("div");
-    const item2 = document.createElement("div");
+    const div = document.createElement('div');
+    const div2 = document.createElement('div');
+    const item1 = document.createElement('div');
+    const item2 = document.createElement('div');
 
     const drake = dragula([div, div2]);
     div.appendChild(item1);
@@ -64,8 +64,8 @@ describe("end", () => {
     document.body.appendChild(div2);
     drake.start(item1);
     div2.appendChild(item1);
-    drake.on("dragend", stubDragEnd);
-    drake.on("drop", stubDrop);
+    drake.on('dragend', stubDragEnd);
+    drake.on('drop', stubDrop);
     drake.end();
 
     expect(drake.dragging).toBeFalsy();

@@ -8,8 +8,7 @@
 
 > Drag and drop so simple it hurts
 
-Browser support includes every sane browser and **IE7+**. _(Granted you polyfill the functional `Array` methods in
-ES5)_
+Browser support includes every sane browser and **IE7+**. _(Granted you polyfill the functional `Array` methods in ES5)_
 
 Indicative target browser support:
 
@@ -333,6 +332,7 @@ If an element managed by `drake` is currently being dragged, this method will gr
 The `drake` is an event emitter. The following events can be tracked using `drake.on(type, listener)`:
 
 <!-- markdownlint-disable MD013 -->
+
 | Event Name | Listener Arguments            | Event Description                                                                                                                                                                       |
 | ---------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `drag`     | `el, source`                  | `el` was lifted from `source`                                                                                                                                                           |
@@ -344,6 +344,7 @@ The `drake` is an event emitter. The following events can be tracked using `drak
 | `over`     | `el, container, source`       | `el` is over `container`, and originally came from `source`                                                                                                                             |
 | `out`      | `el, container, source`       | `el` was dragged out of `container` or dropped, and originally came from `source`                                                                                                       |
 | `cloned`   | `clone, original, type`       | DOM element `original` was cloned as `clone`, of `type` _(`'mirror'` or `'copy'`)_. Fired for mirror images and when `copy: true`                                                       |
+
 <!-- markdownlint-enable MD013 -->
 
 ### `drake.canMove(item)`
