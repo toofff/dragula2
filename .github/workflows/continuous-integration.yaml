@@ -72,7 +72,7 @@ jobs:
                     reporter: 'github-check'
 
     markdown-quality:
-        name: '[LINT] Mardown quality'
+        name: '[LINT] Markdown quality'
         runs-on: ubuntu-latest
         steps:
             -
@@ -87,6 +87,7 @@ jobs:
                     fail_on_error: true
                     github_token: ${{ secrets.GITHUB_TOKEN }}
                     level: 'error'
+                    markdownlint_flags: '. --config .markdownlint.json'
                     reporter: 'github-check'
 
     code-quality:
