@@ -1,0 +1,6 @@
+{
+  "extends": "markdownlint/style/prettier",
+  "MD013": {
+    "line_length": 120
+  }
+}

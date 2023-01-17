@@ -7,6 +7,7 @@ Hey there! Glad you want to chime in. Here's what you need to know.
 If you need to open an issue, please [choose the type of issue][link_issue_create] to open.
 
 We have 4 types of issues to use:
+
 - [bug report][link_issue_create_bug]
 - [feature request][link_issue_create_feature_request]
 - [support question][link_issue_create_support_question]
@@ -23,8 +24,8 @@ Then, if it appears that it's a real bug, you may report it using GitHub by foll
 - Check if [the bug is not already reported][link_issue]!
 - A clear title to resume the issue
 - A description of the workflow needed to reproduce the bug
-- If possible, provide a demo where the bug is isolated and turned into its smallest possible representation. That
-    would help a lot!
+- If possible, provide a demo where the bug is isolated and turned into its smallest possible representation. That would
+  help a lot!
 
 Thanks for reporting bugs, we'd be lost without you and if you want to start working on a fix, we'll be forever
 grateful!
@@ -64,8 +65,8 @@ pnpm start
 
 ### Test
 
-Now we have 2 different technologies in place for testing, **Jest** & **Tape**.
-This will be the case while waiting to stabilize the second edition of Dragula.
+Now we have 2 different technologies in place for testing, **Jest** & **Tape**. This will be the case while waiting to
+stabilize the second edition of Dragula.
 
 In the near future, we want to keep only one technology and it will be **Jest**, because the technology is better
 maintained and with a larger community.
@@ -134,18 +135,20 @@ When you send a PR, just make sure that:
 - You add valid test cases.
 - Tests are green.
 - You make the PR on the same branch you based your changes on. If you see commits that you did not make in your PR,
-    you're doing it wrong.
+  you're doing it wrong.
 - Also don't forget to add a comment when you update a PR with a ping @toofff.
 
 The commit messages must follow the [Conventional Commits specification](https://www.conventionalcommits.org/).
 
 The following `scope` are allowed:
+
 - `core`: Dragula2 source code
 - `website`: presentation and demo website
 - `tools`: the external tools put in place to improve the development experience
 - `github`: management of the github account and its tools
 
 The following `types` are allowed:
+
 - `feat`: a new feature
 - `fix`: a bug fix
 - `docs`: documentation only changes
@@ -165,8 +168,12 @@ The following `types` are allowed:
 [link_prettier_project]: https://prettier.io/
 [link_issue]: https://github.com/toofff/dragula2/issues
 [link_issue_create]: https://github.com/toofff/dragula2/issues/new/choose
-[link_issue_create_bug]: https://github.com/toofff/dragula2/issues/new?assignees=&labels=bug%2CStatus%3A+Needs+review&template=01_bug_report.yaml
-[link_issue_create_feature_request]: https://github.com/toofff/dragula2/issues/new?assignees=&labels=enhancement%2CStatus%3A+Needs+review&template=02_feature_request.yaml
-[link_issue_create_support_question]: https://github.com/toofff/dragula2/issues/new?assignees=&labels=question%2CStatus%3A+Needs+review&template=03_support_question.yaml
-[link_issue_create_documentation]: https://github.com/toofff/dragula2/issues/new?assignees=&labels=documentation%2CStatus%3A+Needs+review&template=04_documentation.yaml
+[link_issue_create_bug]:
+  https://github.com/toofff/dragula2/issues/new?assignees=&labels=bug%2CStatus%3A+Needs+review&template=01_bug_report.yaml
+[link_issue_create_feature_request]:
+  https://github.com/toofff/dragula2/issues/new?assignees=&labels=enhancement%2CStatus%3A+Needs+review&template=02_feature_request.yaml
+[link_issue_create_support_question]:
+  https://github.com/toofff/dragula2/issues/new?assignees=&labels=question%2CStatus%3A+Needs+review&template=03_support_question.yaml
+[link_issue_create_documentation]:
+  https://github.com/toofff/dragula2/issues/new?assignees=&labels=documentation%2CStatus%3A+Needs+review&template=04_documentation.yaml
 [link_issue_question_label]: https://github.com/toofff/dragula2/issues?q=label%3Aquestion

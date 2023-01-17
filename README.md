@@ -8,8 +8,8 @@
 
 > Drag and drop so simple it hurts
 
-Browser support includes every sane browser and **IE7+**. <sub>_(Granted you polyfill the functional `Array` methods in
-ES5)_</sub>
+Browser support includes every sane browser and **IE7+**. _(Granted you polyfill the functional `Array` methods in
+ES5)_
 
 Indicative target browser support:
 
@@ -111,27 +111,29 @@ You can also provide an `options` object. Here's an **overview of the default va
 
 ```js
 dragula(containers, {
-    isContainer: function (el) {
-        return false; // only elements in drake.containers will be taken into account
-    },
-    moves: function (el, source, handle, sibling) {
-        return true; // elements are always draggable by default
-    },
-    accepts: function (el, target, source, sibling) {
-        return true; // elements can be dropped in any of the `containers` by default
-    },
-    invalid: function (el, handle) {
-        return false; // don't prevent any drags from initiating by default
-    },
-    direction: 'vertical', // Y axis is considered when determining where an element would be dropped
-    copy: false, // elements are moved by default, not copied
-    copySortSource: false, // elements in copy-source containers can be reordered
-    revertOnSpill: false, // spilling will put the element back where it was dragged from, if this is true
-    removeOnSpill: false, // spilling will `.remove` the element, if this is true
-    mirrorContainer: document.body, // set the element that gets mirror elements appended
-    ignoreInputTextSelection: true, // allows users to select input text, see details below
-    slideFactorX: 0, // allows users to select the amount of movement on the X axis before it is considered a drag instead of a click
-    slideFactorY: 0, // allows users to select the amount of movement on the Y axis before it is considered a drag instead of a click
+  isContainer: function (el) {
+    return false; // only elements in drake.containers will be taken into account
+  },
+  moves: function (el, source, handle, sibling) {
+    return true; // elements are always draggable by default
+  },
+  accepts: function (el, target, source, sibling) {
+    return true; // elements can be dropped in any of the `containers` by default
+  },
+  invalid: function (el, handle) {
+    return false; // don't prevent any drags from initiating by default
+  },
+  direction: 'vertical', // Y axis is considered when determining where an element would be dropped
+  copy: false, // elements are moved by default, not copied
+  copySortSource: false, // elements in copy-source containers can be reordered
+  revertOnSpill: false, // spilling will put the element back where it was dragged from, if this is true
+  removeOnSpill: false, // spilling will `.remove` the element, if this is true
+  mirrorContainer: document.body, // set the element that gets mirror elements appended
+  ignoreInputTextSelection: true, // allows users to select input text, see details below
+  // allows users to select the amount of movement on the X axis before it is considered a drag instead of a click
+  slideFactorX: 0,
+  // allows users to select the amount of movement on the Y axis before it is considered a drag instead of a click
+  slideFactorY: 0,
 });
 ```
 
@@ -139,7 +141,7 @@ You can omit the `containers` argument and add containers dynamically later on.
 
 ```js
 var drake = dragula({
-    copy: true,
+  copy: true,
 });
 drake.containers.push(container);
 ```
@@ -174,9 +176,9 @@ this `drake`.
 
 ```js
 var drake = dragula({
-    isContainer: function (el) {
-        return el.classList.contains('dragula-container');
-    },
+  isContainer: function (el) {
+    return el.classList.contains('dragula-container');
+  },
 });
 ```
 
@@ -255,7 +257,7 @@ dragged. Here's the default implementation, which doesn't prevent any drags.
 
 ```js
 function invalidTarget(el, handle) {
-    return false;
+  return false;
 }
 ```
 
@@ -320,7 +322,7 @@ Note that **a _"cancellation"_ will result in a `cancel` event** only in the fol
 
 - `revertOnSpill` is `true`
 - Drop target _(as previewed by the feedback shadow)_ is the source container **and** the item is dropped in the same
-    position where it was originally dragged from
+  position where it was originally dragged from
 
 ### `drake.remove()`
 
@@ -330,6 +332,7 @@ If an element managed by `drake` is currently being dragged, this method will gr
 
 The `drake` is an event emitter. The following events can be tracked using `drake.on(type, listener)`:
 
+<!-- markdownlint-disable MD013 -->
 | Event Name | Listener Arguments            | Event Description                                                                                                                                                                       |
 | ---------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `drag`     | `el, source`                  | `el` was lifted from `source`                                                                                                                                                           |
@@ -341,6 +344,7 @@ The `drake` is an event emitter. The following events can be tracked using `drak
 | `over`     | `el, container, source`       | `el` is over `container`, and originally came from `source`                                                                                                                             |
 | `out`      | `el, container, source`       | `el` was dragged out of `container` or dropped, and originally came from `source`                                                                                                       |
 | `cloned`   | `clone, original, type`       | DOM element `original` was cloned as `clone`, of `type` _(`'mirror'` or `'copy'`)_. Fired for mirror images and when `copy: true`                                                       |
+<!-- markdownlint-enable MD013 -->
 
 ### `drake.canMove(item)`
 
@@ -362,11 +366,11 @@ Dragula uses only four CSS classes. Their purpose is quickly explained below, bu
 [`dist/dragula.min.css`][link_minified_css_file] to see the corresponding CSS rules.
 
 - `gu-unselectable` is added to the `mirrorContainer` element when dragging. You can use it to style the
-    `mirrorContainer` while something is being dragged.
+  `mirrorContainer` while something is being dragged.
 - `gu-transit` is added to the source element when its mirror image is dragged. It just adds opacity to it.
 - `gu-mirror` is added to the mirror image. It handles fixed positioning and `z-index` _(and removes any prior margins
-    on the element)_. Note that the mirror image is appended to the `mirrorContainer`, not to its initial container.
-    Keep that in mind when styling your elements with nested rules, like `.list .item { padding: 10px; }`.
+  on the element)_. Note that the mirror image is appended to the `mirrorContainer`, not to its initial container. Keep
+  that in mind when styling your elements with nested rules, like `.list .item { padding: 10px; }`.
 - `gu-hide` is a helper class to apply `display: none` to an element.
 
 ## Contributing
@@ -378,12 +382,12 @@ See [CONTRIBUTING.md][link_contributing_file] for details.
 MIT
 
 [badge_github_link_workflow_integration]:
-    https://github.com/toofff/dragula2/actions/workflows/continuous-integration.yaml
+  https://github.com/toofff/dragula2/actions/workflows/continuous-integration.yaml
 [badge_github_link_workflow_deployment]: https://github.com/toofff/dragula2/actions/workflows/continuous-deployment.yaml
 [badge_github_workflow_integration_svg]:
-    https://github.com/toofff/dragula2/actions/workflows/continuous-integration.yaml/badge.svg?branch=main
+  https://github.com/toofff/dragula2/actions/workflows/continuous-integration.yaml/badge.svg?branch=main
 [badge_github_workflow_deployment_svg]:
-    https://github.com/toofff/dragula2/actions/workflows/continuous-deployment.yaml/badge.svg?branch=main
+  https://github.com/toofff/dragula2/actions/workflows/continuous-deployment.yaml/badge.svg?branch=main
 [badge_prettier_link]: https://github.com/prettier/prettier
 [badge_prettier_svg]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [demo_link_angular_bridge]: http://valor-software.com/ng2-dragula/index.html
