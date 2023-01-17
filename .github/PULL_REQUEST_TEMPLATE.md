@@ -2,7 +2,7 @@
 
 | Q             | A                                                                                                                         |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| Branch?       |
+| Branch?       | main                                                                                                                      |
 | Bug fix?      | yes/no                                                                                                                    |
 | New feature?  | yes/no <!-- documenation required for new features -->                                                                    |
 | Deprecations? | yes/no                                                                                                                    |

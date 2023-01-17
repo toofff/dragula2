@@ -119,10 +119,10 @@ class Dragula extends EventTarget {
 
       // truthy check fixes #239, equality fixes #207, fixes #501
       if (
-        e.clientX !== undefined
-        && Math.abs(e.clientX - _moveX) <= (drake.options.slideFactorX || 0)
-        && e.clientY !== undefined
-        && Math.abs(e.clientY - _moveY) <= (drake.options.slideFactorY || 0)
+        e.clientX !== undefined &&
+        Math.abs(e.clientX - _moveX) <= (drake.options.slideFactorX || 0) &&
+        e.clientY !== undefined &&
+        Math.abs(e.clientY - _moveY) <= (drake.options.slideFactorY || 0)
       ) {
         return;
       }
