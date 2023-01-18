@@ -1,13 +1,13 @@
 # Context of your Pull Request
 
-| Q             | A                                                                                                                         |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| Branch?       | main                                                                                                                      |
-| Bug fix?      | yes/no                                                                                                                    |
-| New feature?  | yes/no <!-- documenation required for new features -->                                                                    |
-| Deprecations? | yes/no                                                                                                                    |
-| Tickets       | Fix #... <!-- prefix each issue number with "Fix #", no need to create an issue if none exists, explain below instead --> |
-| License       | MIT                                                                                                                       |
+| Q             | A
+| ------------- | ---
+| Branch?       | main
+| Bug fix?      | yes/no
+| New feature?  | yes/no <!-- documenation required for new features -->
+| Deprecations? | yes/no
+| Tickets       | Fix #... <!-- prefix each issue number with "Fix #", no need to create an issue if none exists, explain below instead -->
+| License       | MIT
 
 ## Description
 
