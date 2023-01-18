@@ -3,24 +3,28 @@
   "env": {
     "browser": true,
     "commonjs": true,
-    "es6": true,
+    "es2022": true,
     "node": true
   },
   "parserOptions": {
-    "ecmaVersion": "latest",
+    "ecmaVersion": 13,
     "sourceType": "script",
     "ecmaFeatures": {
       "impliedStrict": true
     }
   },
-  "extends": ["eslint:recommended", "airbnb-base", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "airbnb-base",
+    "plugin:import/recommended",
+    "plugin:promise/recommended",
+    "plugin:prettier/recommended"
+  ],
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error",
     "consistent-return": "warn",
-    "max-len": "warn",
     "no-bitwise": "warn",
-    "no-mixed-operators": "warn",
     "no-multi-assign": "warn",
     "no-nested-ternary": "warn",
     "no-param-reassign": "warn",
