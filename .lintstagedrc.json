@@ -1,4 +1,4 @@
 {
-  "src/*.js": ["pnpm run lint:tool:eslint --fix", "git add ."],
+  "{__tests__,src}/**/*.js": ["pnpm run lint:tool:eslint --fix", "git add ."],
   "**/*.{css,html,json,md}": ["pnpm run lint:tool:prettier --write", "git add ."]
 }

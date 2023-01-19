@@ -33,7 +33,7 @@ describe('destroy', () => {
     drake.start(item);
     drake.destroy();
 
-    expect(div.children.length).toEqual(1);
+    expect(div.children).toHaveLength(1);
     expect(drake.dragging).toBeFalsy();
   });
 

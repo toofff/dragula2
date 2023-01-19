@@ -6,7 +6,7 @@ describe('container', () => {
     const drake = dragula();
 
     expect(Array.isArray(drake.containers)).toBeTruthy();
-    expect(drake.containers.length).toEqual(0);
+    expect(drake.containers).toHaveLength(0);
   });
 
   it('drake reads containers from array argument', () => {
@@ -15,7 +15,7 @@ describe('container', () => {
     const drake = dragula(containers);
 
     expect(drake.containers).toEqual(containers);
-    expect(drake.containers.length).toEqual(1);
+    expect(drake.containers).toHaveLength(1);
   });
 
   it('drake reads containers from array in options', () => {
@@ -24,7 +24,7 @@ describe('container', () => {
     const drake = dragula({ containers });
 
     expect(drake.containers).toEqual(containers);
-    expect(drake.containers.length).toEqual(1);
+    expect(drake.containers).toHaveLength(1);
   });
 
   it('containers in options take precedent', () => {
@@ -33,6 +33,6 @@ describe('container', () => {
     const drake = dragula([], { containers });
 
     expect(drake.containers).toEqual(containers);
-    expect(drake.containers.length).toEqual(1);
+    expect(drake.containers).toHaveLength(1);
   });
 });

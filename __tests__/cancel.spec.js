@@ -33,7 +33,7 @@ describe('cancel', () => {
     drake.start(item);
     drake.cancel();
 
-    expect(div.children.length).toEqual(1);
+    expect(div.children).toHaveLength(1);
     expect(drake.dragging).toBeFalsy();
   });
 

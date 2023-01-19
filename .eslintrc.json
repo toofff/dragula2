@@ -13,6 +13,7 @@
       "impliedStrict": true
     }
   },
+  "plugins": ["prettier"],
   "extends": [
     "eslint:recommended",
     "airbnb-base",
@@ -20,7 +21,25 @@
     "plugin:promise/recommended",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["prettier"],
+  "overrides": [
+    {
+      "files": ["**/__tests__/**/*.js", "**/?(*.)+(spec|test).js"],
+      "env": {
+        "jest": true
+      },
+      "settings": {
+        "jest": {
+          "version": 29
+        }
+      },
+      "extends": [
+        "plugin:jest/recommended",
+        "plugin:jest/style",
+        "plugin:jest-dom/recommended",
+        "plugin:testing-library/dom"
+      ]
+    }
+  ],
   "rules": {
     "prettier/prettier": "error",
     "consistent-return": "warn",

@@ -10,5 +10,5 @@ const raise = (el, type, options) => {
 };
 
 module.exports = {
-  raise: raise,
+  raise,
 };
