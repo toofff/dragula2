@@ -154,7 +154,7 @@ describe('drag', () => {
     events.raise(item, 'pointerdown', { which: 1 });
     events.raise(item, 'pointermove', { which: 1 });
 
-    expect(item.className).toEqual('gu-transit');
+    expect(item.className).toBe('gu-transit');
   });
 
   it.skip('when dragging, body gets gu-unselectable class', () => {
@@ -167,7 +167,7 @@ describe('drag', () => {
     events.raise(item, 'pointerdown', { which: 1 });
     events.raise(item, 'pointermove', { which: 1 });
 
-    expect(document.body.className).toEqual('gu-unselectable');
+    expect(document.body.className).toBe('gu-unselectable');
   });
 
   it.skip('when dragging, element gets a mirror image for show', () => {
@@ -186,7 +186,7 @@ describe('drag', () => {
 
     expect(item.className).toBe('gu-transit');
     expect(stubCloned).toHaveBeenCalledTimes(1);
-    expect(stubCloned.mock.calls[0][0].className).toEqual('gu-mirror');
+    expect(stubCloned.mock.calls[0][0].className).toBe('gu-mirror');
     expect(stubCloned.mock.calls[0][0].innerHTML).toEqual(item.innerHTML);
     expect(stubCloned.mock.calls[0][1]).toEqual(item);
   });
@@ -220,11 +220,11 @@ describe('drag', () => {
     events.raise(item, 'pointerdown', { which: 1 });
     events.raise(item, 'pointermove', { which: 1 });
 
-    expect(item.className).toEqual('gu-transit');
+    expect(item.className).toBe('gu-transit');
 
     drake.end();
 
-    expect(item.className).toEqual('');
+    expect(item.className).toBe('');
   });
 
   it.skip('when dragging stops, body becomes selectable again', () => {
@@ -237,11 +237,11 @@ describe('drag', () => {
     events.raise(item, 'pointerdown', { which: 1 });
     events.raise(item, 'pointermove', { which: 1 });
 
-    expect(document.body.className).toEqual('gu-unselectable');
+    expect(document.body.className).toBe('gu-unselectable');
 
     drake.end();
 
-    expect(document.body.className).toEqual('');
+    expect(document.body.className).toBe('');
   });
 
   it.skip('when drag begins, check for copy option', () => {
@@ -261,8 +261,8 @@ describe('drag', () => {
     events.raise(item, 'pointermove', { which: 1 }); // ensure the copy method condition is only asserted once
 
     expect(stubCopy).toHaveBeenCalledTimes(1);
-    expect(stubCopy.mock.calls[0][0].className).toEqual('copyable');
-    expect(stubCopy.mock.calls[0][1].className).toEqual('contains');
+    expect(stubCopy.mock.calls[0][0].className).toBe('copyable');
+    expect(stubCopy.mock.calls[0][1].className).toBe('contains');
 
     drake.end();
   });

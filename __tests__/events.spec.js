@@ -16,7 +16,7 @@ describe('events', () => {
     drake.start(item);
 
     expect(stubCloned).toHaveBeenCalledTimes(1);
-    expect(stubCloned.mock.calls[0][2]).toEqual('copy');
+    expect(stubCloned.mock.calls[0][2]).toBe('copy');
     expect(stubCloned.mock.calls[0][0]).not.toBe(item);
     expect(stubCloned.mock.calls[0][0].nodeType).toEqual(item.nodeType);
     expect(stubCloned.mock.calls[0][1]).toEqual(item);
@@ -225,7 +225,7 @@ describe('events', () => {
     events.raise(item, 'pointermove', { which: 1 });
 
     expect(stubCloned).toHaveBeenCalledTimes(1);
-    expect(stubCloned.mock.calls[0][2]).toEqual('mirror');
+    expect(stubCloned.mock.calls[0][2]).toBe('mirror');
     expect(stubCloned.mock.calls[0][0]).not.toBe(item);
     expect(stubCloned.mock.calls[0][0].nodeType).toEqual(item.nodeType);
     expect(stubCloned.mock.calls[0][1]).toEqual(item);
@@ -245,7 +245,7 @@ describe('events', () => {
     events.raise(item, 'pointermove', { which: 1 });
 
     expect(stubCloned).toHaveBeenCalledTimes(1);
-    expect(stubCloned.mock.calls[0][2]).toEqual('copy');
+    expect(stubCloned.mock.calls[0][2]).toBe('copy');
     expect(stubCloned.mock.calls[0][0]).not.toBe(item);
     expect(stubCloned.mock.calls[0][0].nodeType).toEqual(item.nodeType);
     expect(stubCloned.mock.calls[0][1]).toEqual(item);

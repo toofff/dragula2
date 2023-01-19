@@ -34,7 +34,7 @@ describe('remove', () => {
     drake.start(item);
     drake.remove();
 
-    expect(div.children.length).toEqual(0);
+    expect(div.children).toHaveLength(0);
     expect(drake.dragging).toBeFalsy();
   });
 
@@ -79,7 +79,7 @@ describe('remove', () => {
 
     expect(drake.dragging).toBeFalsy();
     expect(stubCancel).toHaveBeenCalledTimes(1);
-    expect(stubCancel.mock.calls[0][0].className).toEqual('gu-transit');
+    expect(stubCancel.mock.calls[0][0].className).toBe('gu-transit');
     expect(stubCancel.mock.calls[0][0]).not.toEqual(item);
     expect(stubCancel.mock.calls[0][1]).toBeNull();
     expect(stubDragEnd).toHaveBeenCalledTimes(1);
