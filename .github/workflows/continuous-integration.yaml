@@ -65,7 +65,7 @@ jobs:
                 name: '[OSS / REVIEW DOG] Launch eslint'
                 uses: reviewdog/action-eslint@d3395027ea2cfc5cf8f460b1ea939b6c86fea656 # v1.17.0
                 with:
-                    eslint_flags: './src --color --config .eslintrc.json --ext .js'
+                    eslint_flags: '--color --no-inline-config .eslintrc.json ./{__tests__,src}/**/*.js'
                     fail_on_error: true
                     github_token: ${{ secrets.GITHUB_TOKEN }}
                     level: 'error'
