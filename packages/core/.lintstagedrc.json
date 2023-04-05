@@ -1,0 +1,4 @@
+{
+  "{__tests__,src}/**/*.js": ["pnpm run lint:tool:analyzer --fix", "git add ."],
+  "**/*.{css,html,json,md}": ["pnpm run lint:tool:formatter --fix", "git add ."]
+}

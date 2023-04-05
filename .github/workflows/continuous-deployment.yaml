@@ -34,7 +34,7 @@ jobs:
             -
                 name: 'Launch build'
                 shell: sh
-                run: pnpm run build
+                run: pnpm run --filter="@dragula2/core" build
             -
                 name: '[GITHUB / OFFICIAL] Setup Pages'
                 uses: actions/configure-pages@c5a3e1159e0cbdf0845eb8811bd39e39fc3099c2 # v2.1.3

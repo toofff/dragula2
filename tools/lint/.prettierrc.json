@@ -1,14 +1,17 @@
 {
   "$schema": "http://json.schemastore.org/prettierrc",
-  "editorconfig": true,
   "arrowParens": "always",
+  "bracketSameLine": false,
   "bracketSpacing": true,
+  "endOfLine": "lf",
   "htmlWhitespaceSensitivity": "css",
+  "printWidth": 120,
   "proseWrap": "always",
   "quoteProps": "as-needed",
   "semi": true,
   "singleQuote": true,
-  "trailingComma": "es5",
+  "tabWidth": 2,
+  "trailingComma": "all",
   "useTabs": false,
   "overrides": [
     {
@@ -27,13 +30,23 @@
     {
       "files": "*.json",
       "options": {
-        "parser": "json"
+        "parser": "json5",
+        "quoteProps": "preserve",
+        "singleQuote": false,
+        "trailingComma": "none"
       }
     },
     {
       "files": ["*.md", "LICENSE"],
       "options": {
         "parser": "markdown"
+      }
+    },
+    {
+      "files": ["*.yaml", "*.yml"],
+      "options": {
+        "parser": "yaml",
+        "tabWidth": 4
       }
     }
   ]

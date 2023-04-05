@@ -1,6 +1,6 @@
 const { documentElement } = document;
 
-class Dragula extends EventTarget {
+export class Dragula extends EventTarget {
   constructor(initialContainers, options) {
     super();
 
@@ -663,5 +663,3 @@ function getReference(dropTarget, target, x, y, direction) {
 
   return target !== dropTarget ? inside() : outside();
 }
-
-module.exports = dragula;

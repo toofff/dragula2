@@ -14,13 +14,7 @@
     }
   },
   "plugins": ["prettier"],
-  "extends": [
-    "eslint:recommended",
-    "airbnb-base",
-    "plugin:import/recommended",
-    "plugin:promise/recommended",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["eslint:recommended", "airbnb-base", "plugin:import/recommended", "plugin:promise/recommended"],
   "overrides": [
     {
       "files": ["**/__tests__/**/*.js", "**/?(*.)+(spec|test).js"],
@@ -49,6 +43,8 @@
     "no-param-reassign": "warn",
     "no-plusplus": "warn",
     "no-underscore-dangle": "warn",
-    "no-use-before-define": "warn"
+    "no-use-before-define": "warn",
+    "max-len": ["error", { "code": 120, "tabWidth": 2 }],
+    "operator-linebreak": "off"
   }
 }

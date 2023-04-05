@@ -39,12 +39,12 @@ describe('drag', () => {
     testCase(
       'fails whenever invalid returns true',
       { which: 1 },
-      { passes: false, dragulaOpts: { invalid: jest.fn(() => true) } }
+      { passes: false, dragulaOpts: { invalid: jest.fn(() => true) } },
     );
     testCase(
       'fails whenever moves returns false',
       { which: 1 },
-      { passes: false, dragulaOpts: { moves: jest.fn(() => false) } }
+      { passes: false, dragulaOpts: { moves: jest.fn(() => false) } },
     );
   });
 

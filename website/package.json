@@ -1,0 +1,32 @@
+{
+  "name": "@website/demo",
+  "version": "0.0.0",
+  "private": true,
+  "author": "Prou Yann <toofff.development@gmail.com>",
+  "description": "Website for Dragula second edition",
+  "homepage": "https://toofff.github.io/dragula2",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toofff/dragula2.git"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "start": "",
+    "build": "",
+    "start:old": "concurrently \"process-builder --watch\" \"serve public\"",
+    "build:old": "process-builder",
+    "lint": "pnpm run lint:tool:analyzer; pnpm run lint:tool:formatter",
+    "lint:fix": "pnpm run lint:tool:analyzer --fix; pnpm run lint:tool:formatter --fix",
+    "lint:tool:analyzer": "lint-analyzer \"./src/**/*.js\"",
+    "lint:tool:formatter": "lint-formatter \"**/*.{css,html,json,md}\""
+  },
+  "dependencies": {
+    "@dragula2/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@tools/lint": "workspace:*",
+    "rollup": "3.20.2"
+  }
+}

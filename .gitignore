@@ -28,6 +28,9 @@ lib-cov
 coverage
 *.lcov
 
+# Turbo cache
+.turbo
+
 # TypeScript cache
 *.tsbuildinfo
 
@@ -36,6 +39,3 @@ coverage
 
 # Optional eslint cache
 .eslintcache
-
-# Tests
-test/test.html
