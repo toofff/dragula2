@@ -5,6 +5,10 @@ const config = {
   testEnvironment: 'jsdom',
   testMatch: ['<rootDir>/__tests__/**/*.spec.js', '<rootDir>/src/**/*.spec.js'],
   verbose: true,
+  // extensionsToTreatAsEsm: ['.js'],
+  transform: {
+    "\\.[jt]sx?$": "babel-jest"
+  },
 };
 
 module.exports = config;

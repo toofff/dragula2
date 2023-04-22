@@ -7,10 +7,11 @@
     "node": true
   },
   "parserOptions": {
-    "ecmaVersion": 13,
-    "sourceType": "script",
+    "ecmaVersion": 2017,
+    "sourceType": "module",
     "ecmaFeatures": {
-      "impliedStrict": true
+      "impliedStrict": true,
+      "modules": true
     }
   },
   "plugins": ["prettier"],

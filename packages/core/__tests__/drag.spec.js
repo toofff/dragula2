@@ -1,6 +1,6 @@
 /* eslint-disable */
-const dragula = require('../src/dragula');
-const events = require('./lib/events');
+import {dragula} from '../src/dragula';
+import {events} from './lib/events';
 
 describe('drag', () => {
   describe.skip('drag event gets emitted when clicking an item', () => {

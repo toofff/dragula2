@@ -27,25 +27,61 @@ export default () => {
   // @todo: find the hash of the commit
   const releaseHash = 'my-hash';
 
+  // ESM, standard bundler
   const esModules = [
     {
       input: "./src/index.js",
       output: [
         {
-          file: './dist/esm/index.min.js',
+          file: './dist/esm/index.min.mjs',
           format: 'es',
           sourcemap: true,
           banner: createBanner("@dragula2/core", releaseDate, releaseHash, pkg.version, pkg.author, pkg.homepage),
         }
       ],
       plugins: [
-        babel({babelHelpers: "bundled"}),
-        terser({ ecma: 8, safari10: true }),
+        babel({
+          babelHelpers: "bundled",
+          presets: [
+            "@babel/preset-modules",
+          ],
+        }),
+        terser({ecma: 2017, module: true, safari10: true }),
         generatePackageJson({
           baseContents: {
             "type": "module"
           },
           outputFolder: './dist/esm'
+        }),
+      ],
+    }
+  ];
+
+  // ESM, Webpack 4 support
+  const legacyESModules = [
+    {
+      input: "./src/index.js",
+      output: [
+        {
+          file: './dist/legacy-esm/index.min.js',
+          format: 'es',
+          sourcemap: true,
+          banner: createBanner("@dragula2/core", releaseDate, releaseHash, pkg.version, pkg.author, pkg.homepage),
+        }
+      ],
+      plugins: [
+        babel({
+          babelHelpers: "bundled",
+          presets: [
+            "@babel/preset-modules",
+          ],
+        }),
+        terser({ ecma: 2017, module: true, safari10: true }),
+        generatePackageJson({
+          baseContents: {
+            "type": "module"
+          },
+          outputFolder: './dist/legacy-esm'
         }),
       ],
     }
@@ -64,8 +100,13 @@ export default () => {
       ],
       plugins: [
         commonjs(),
-        babel({babelHelpers: "bundled"}),
-        terser({ ecma: 8, safari10: true }),
+        babel({
+          babelHelpers: "bundled",
+          presets: [
+            "@babel/preset-modules",
+          ],
+        }),
+        terser({ ecma: 2017, safari10: true }),
         generatePackageJson({
           baseContents: {
             "type": "commonjs"
@@ -76,5 +117,5 @@ export default () => {
     }
   ];
 
-  return [...esModules, ...commonJs];
+  return [...esModules, ...legacyESModules, ...commonJs];
 }

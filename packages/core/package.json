@@ -10,11 +10,13 @@
   "license": "MIT",
   "type": "module",
   "main": "./dist/cjs/index.min.js",
-  "module": "./dist/esm/index.min.js",
-  "files": ["dist"],
+  "module": "./dist/legacy-esm/index.min.js",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
-      "import": "./dist/esm/index.min.js",
+      "import": "./dist/esm/index.min.mjs",
       "require": "./dist/cjs/index.min.js",
       "style": "./dist/index.min.css"
     },
@@ -43,12 +45,15 @@
     "test:old:watch": "pnpm exec hihat test/*.js -p tap-dev-tool"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/preset-modules": "0.1.5",
     "@rollup/plugin-babel": "6.0.3",
     "@rollup/plugin-commonjs": "24.1.0",
     "@rollup/plugin-terser": "0.4.1",
     "@testing-library/dom": "8.19.1",
     "@testing-library/jest-dom": "5.16.5",
     "@tools/lint": "workspace:*",
+    "babel-jest": "^29.5.0",
     "browserify": "17.0.0",
     "hihat": "2.6.4",
     "jest": "29.3.1",

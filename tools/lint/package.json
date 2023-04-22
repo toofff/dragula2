@@ -6,6 +6,7 @@
   "description": "Centralization of tools and configurations related to the static quality and the lint of the Dragula2 project.",
   "homepage": "https://toofff.github.io/dragula2",
   "license": "MIT",
+  "type": "module",
   "bin": {
     "lint-analyzer": "./bin/analyzer.js",
     "lint-formatter": "./bin/formatter.js"

@@ -9,6 +9,6 @@ const raise = (el, type, options) => {
   }
 };
 
-module.exports = {
+export const events = {
   raise,
 };

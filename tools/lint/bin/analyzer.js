@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-const { spawn } = require('child_process');
+// const { spawn } = require('child_process');
+import { spawn } from 'node:child_process';
 
 const analyzer = (args, isLaunchedInternally = false, mustFix = false) => {
   const defaultArgs = [
