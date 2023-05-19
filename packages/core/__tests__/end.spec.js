@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {dragula} from '../src/dragula';
+import { dragula } from '../src/dragula';
 
 describe('end', () => {
   describe('end does not throw when not dragging', () => {

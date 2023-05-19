@@ -1,6 +1,6 @@
 const { documentElement } = document;
 
-export class Dragula extends EventTarget {
+export default class Dragula extends EventTarget {
   constructor(initialContainers, options) {
     super();
 
@@ -549,9 +549,9 @@ export class Dragula extends EventTarget {
   };
 }
 
-function dragula(...args) {
-  return new Dragula(...args);
-}
+// function dragula(...args) {
+//   return new Dragula(...args);
+// }
 
 function whichMouseButton(e) {
   if (e.touches !== undefined) {

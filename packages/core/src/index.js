@@ -1,1 +1,1 @@
-export * from './dragula.js';
+export * from './dragula';

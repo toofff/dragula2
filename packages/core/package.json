@@ -11,9 +11,7 @@
   "type": "module",
   "main": "./dist/cjs/index.min.js",
   "module": "./dist/legacy-esm/index.min.js",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "exports": {
     ".": {
       "import": "./dist/esm/index.min.mjs",

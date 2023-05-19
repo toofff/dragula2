@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {dragula} from '../src/dragula';
+import { dragula } from '../src/dragula';
 
 describe('drake-api', () => {
   it('drake can be instantiated without throwing', () => {

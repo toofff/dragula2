@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {dragula} from '../src/dragula';
+import { dragula } from '../src/dragula';
 
 describe('default', () => {
   it('drake has sensible default options', () => {

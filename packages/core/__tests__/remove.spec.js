@@ -1,6 +1,6 @@
 /* eslint-disable */
-import {dragula} from '../src/dragula';
-import {events} from './lib/events';
+import { dragula } from '../src/dragula';
+import { events } from './lib/events';
 
 describe('remove', () => {
   describe('remove does not throw when not dragging', () => {

@@ -6,12 +6,12 @@
     "es2022": true,
     "node": true
   },
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 2017,
+    "ecmaVersion": 2022,
     "sourceType": "module",
     "ecmaFeatures": {
-      "impliedStrict": true,
-      "modules": true
+      "impliedStrict": true
     }
   },
   "plugins": ["prettier"],

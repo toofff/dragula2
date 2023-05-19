@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {dragula} from '../src/dragula';
+import { dragula } from '../src/dragula';
 
 describe('container', () => {
   it('drake defaults to no containers', () => {
