@@ -41,7 +41,3 @@ trim_trailing_whitespace = false
 indent_style = space
 indent_size = 4
 trim_trailing_whitespace = false
-
-[.gitmodules]
-indent_style = tab
-indent_size = 4

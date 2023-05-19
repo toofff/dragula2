@@ -46,31 +46,32 @@ jobs:
                     level: 'error'
                     reporter: 'github-check'
 
-    javascript-quality:
-        name: '[LINT] Javascript quality'
-        runs-on: ubuntu-latest
-        steps:
-            -
-                name: '[GITHUB / OFFICIAL] Checkout'
-                uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
-                with:
-                    fetch-depth: 0
-            -
-                name: '[INTERNAL] Install project & environment'
-                uses: ./.github/actions/install
-                with:
-                    architecture: x64
-                    node_version: 18
-            -
-                name: '[OSS / REVIEW DOG] Launch eslint'
-                uses: reviewdog/action-eslint@d3395027ea2cfc5cf8f460b1ea939b6c86fea656 # v1.17.0
-                with:
-                    eslint_flags: '--color --no-inline-config .eslintrc.json ./{__tests__,src}/**/*.js'
-                    fail_on_error: true
-                    github_token: ${{ secrets.GITHUB_TOKEN }}
-                    level: 'error'
-                    reporter: 'github-check'
+#    javascript-quality:
+#        name: '[LINT] Javascript quality'
+#        runs-on: ubuntu-latest
+#        steps:
+#            -
+#                name: '[GITHUB / OFFICIAL] Checkout'
+#                uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+#                with:
+#                    fetch-depth: 0
+#            -
+#                name: '[INTERNAL] Install project & environment'
+#                uses: ./.github/actions/install
+#                with:
+#                    architecture: x64
+#                    node_version: 18
+#            -
+#                name: '[OSS / REVIEW DOG] Launch eslint'
+#                uses: reviewdog/action-eslint@d3395027ea2cfc5cf8f460b1ea939b6c86fea656 # v1.17.0
+#                with:
+#                    eslint_flags: '--color --no-inline-config .eslintrc.json ./{__tests__,src}/**/*.js'
+#                    fail_on_error: true
+#                    github_token: ${{ secrets.GITHUB_TOKEN }}
+#                    level: 'error'
+#                    reporter: 'github-check'
 
+    # @todo: should be launched by package
     markdown-quality:
         name: '[LINT] Markdown quality'
         runs-on: ubuntu-latest
@@ -87,9 +88,10 @@ jobs:
                     fail_on_error: true
                     github_token: ${{ secrets.GITHUB_TOKEN }}
                     level: 'error'
-                    markdownlint_flags: '. --config .markdownlint.json'
+                    markdownlint_flags: '. --config ./tools/lint/.markdownlint.json'
                     reporter: 'github-check'
 
+    # @todo: should be launched by package
     code-quality:
         name: '[LINT] Code quality'
         runs-on: ubuntu-latest
@@ -106,17 +108,19 @@ jobs:
                     DEFAULT_BRANCH: 'main'
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     VALIDATE_ALL_CODEBASE: false
-                    VALIDATE_CSS: true
+#                    VALIDATE_CSS: true
                     VALIDATE_ENV: true
                     VALIDATE_GITLEAKS: true
 
+    # @todo: should be launched by package
     tests-with-jest:
-        needs: [commit-quality, github-action-quality, javascript-quality, markdown-quality, code-quality]
+        needs: [commit-quality, github-action-quality, markdown-quality, code-quality]
+#        needs: [commit-quality, github-action-quality, javascript-quality, markdown-quality, code-quality]
         strategy:
             matrix:
                 ARCHITECTURE: [x64]
                 OS: [ubuntu-latest, macos-latest]
-                NODE_VERSION: [14, 16, 18]
+                NODE_VERSION: [16, 18]
         name: '[TEST] Jest - Node ${{ matrix.NODE_VERSION }} - ${{ matrix.ARCHITECTURE }} on ${{ matrix.OS }}'
         runs-on: ${{ matrix.OS }}
         steps:
@@ -132,19 +136,21 @@ jobs:
             -
                 name: 'Launch build'
                 shell: sh
-                run: pnpm run build
+                run: pnpm run --filter="@dragula2/core" build
             -
                 name: 'Launch test'
                 shell: sh
-                run: pnpm run test:ci
+                run: pnpm run --filter="@dragula2/core" test:ci
 
+    # @todo: should be launched by package
     tests-with-tape:
-        needs: [commit-quality, github-action-quality, javascript-quality, markdown-quality, code-quality]
+        needs: [commit-quality, github-action-quality, markdown-quality, code-quality]
+#        needs: [commit-quality, github-action-quality, javascript-quality, markdown-quality, code-quality]
         strategy:
             matrix:
                 ARCHITECTURE: [x64]
                 OS: [ubuntu-latest, macos-latest]
-                NODE_VERSION: [14, 16, 18]
+                NODE_VERSION: [16, 18]
         name: '[TEST] Tape - Node ${{ matrix.NODE_VERSION }} - ${{ matrix.ARCHITECTURE }} on ${{ matrix.OS }}'
         runs-on: ${{ matrix.OS }}
         steps:
@@ -164,17 +170,17 @@ jobs:
             -
                 name: 'Launch build'
                 shell: sh
-                run: pnpm run build
+                run: pnpm run --filter="@dragula2/core" build
             -
                 name: '[For UbuntuOS] Launch test'
                 if: matrix.OS == 'ubuntu-latest'
                 shell: sh
-                run: xvfb-run --auto-servernum pnpm run test:old
+                run: xvfb-run --auto-servernum pnpm run --filter="@dragula2/core" test:old
             -
                 name: 'Launch test'
                 if: matrix.OS != 'ubuntu-latest'
                 shell: sh
-                run: pnpm run test:old
+                run: pnpm run --filter="@dragula2/core" test:old
 
     tests-end:
         needs: [tests-with-jest, tests-with-tape]

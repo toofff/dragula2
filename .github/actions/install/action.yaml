@@ -8,11 +8,11 @@ inputs:
         required: false
     node_version:
         description: 'Version of node'
-        default: 17
+        default: 18
         required: false
     pnpm_version:
         description: 'Version of pnpm'
-        default: 6.10.0
+        default: 8.2.0
         required: false
 
 # Add cache for pnpm / node / node_module?

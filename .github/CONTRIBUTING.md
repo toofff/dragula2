@@ -142,10 +142,11 @@ The commit messages must follow the [Conventional Commits specification](https:/
 
 The following `scope` are allowed:
 
-- `core`: Dragula2 source code
-- `website`: presentation and demo website
-- `tools`: the external tools put in place to improve the development experience
+- `core`: Dragula2 source code (`@dragula2/core` package)
 - `github`: management of the github account and its tools
+- `monorepo`: monorepository management
+- `tools`: the external tools put in place to improve the development experience
+- `website`: presentation and demo website
 
 The following `types` are allowed:
 
