@@ -1,0 +1,20 @@
+{
+  "name": "@dragula2/core",
+  "version": "0.0.0",
+  "description": "Drag and drop so simple it hurts - Second edition",
+  "homepage": "https://toofff.github.io/dragula2",
+  "bugs": {
+    "url": "https://github.com/toofff/dragula2/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toofff/dragula2.git",
+    "directory": "packages/core"
+  },
+  "license": "MIT",
+  "author": "Prou Yann <toofff.development@gmail.com>",
+  "sideEffects": false,
+  "scripts": {
+    "preinstall": "npx only-allow pnpm"
+  }
+}
