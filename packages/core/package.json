@@ -1,6 +1,6 @@
 {
   "name": "@dragula2/core",
-  "version": "0.0.0",
+  "version": "0.1.0-alpha",
   "description": "Drag and drop so simple it hurts - Second edition",
   "homepage": "https://toofff.github.io/dragula2",
   "bugs": {
@@ -11,10 +11,37 @@
     "url": "https://github.com/toofff/dragula2.git",
     "directory": "packages/core"
   },
+  "type": "module",
+  "module": "dist/dragula.legacy-esm.js",
+  "main": "dist/cjs/dragula.cjs",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./dist/dragula.modern.mjs",
+      "default": "./dist/cjs/dragula.cjs"
+    }
+  },
   "license": "MIT",
   "author": "Prou Yann <toofff.development@gmail.com>",
   "sideEffects": false,
   "scripts": {
-    "preinstall": "npx only-allow pnpm"
-  }
+    "preinstall": "npx only-allow pnpm",
+    "build": "rollup --config",
+    "start": "rollup --config --watch"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "25.0.2",
+    "@rollup/plugin-terser": "0.4.3",
+    "rollup": "3.25.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.map",
+    "src",
+    "README.md",
+    "LICENSE"
+  ]
 }

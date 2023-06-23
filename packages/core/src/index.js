@@ -549,7 +549,7 @@ class Dragula extends EventTarget {
   };
 }
 
-function dragula(...args) {
+export function dragula(...args) {
   return new Dragula(...args);
 }
 
@@ -663,5 +663,3 @@ function getReference(dropTarget, target, x, y, direction) {
 
   return target !== dropTarget ? inside() : outside();
 }
-
-module.exports = dragula;
